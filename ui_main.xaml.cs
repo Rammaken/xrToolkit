@@ -37,7 +37,7 @@ namespace xrToolkit
             {
                 string var_level_name = input_map_name.Text;
                 // Ruta del archivo .exe
-                string exePath = @"toolkit/converter.exe";
+                string exePath = @"thirdtools/converter.exe";
 
                 // Argumentos que deseas pasar al .exe
                 string arguments = "-level sdk:" + var_level_name + " -mode le -with_lods";

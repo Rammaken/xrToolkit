@@ -1,0 +1,57 @@
+  Compiler.CompilerForm.resources - Embedded, ContainedInManifestFile, 
+  Compiler.MenuForm.resources - Embedded, ContainedInManifestFile, 
+  Compiler.SelectForm.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly xrCompiler, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35: 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class Compiler.MenuForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    WillClose(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    LevelName(): PrivateScope, Public, HideBySig
+    SetLevelName(String): PrivateScope, Public, HideBySig
+    OpenProject(String): PrivateScope, Public, HideBySig
+    AddSpawnToList(String): PrivateScope, Public, HideBySig
+Class Compiler.CompilerForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    AddLog(String): PrivateScope, Public, HideBySig
+    AddPhase(String): PrivateScope, Public, HideBySig
+    SetStage(String): PrivateScope, Public, HideBySig
+    SetInfo(String): PrivateScope, Public, HideBySig
+    SetTime(String): PrivateScope, Public, HideBySig
+    SetPText(String): PrivateScope, Public, HideBySig
+    RemoveLastPhase(): PrivateScope, Public, HideBySig
+    SetLogScroll(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    SetPhaseScroll(): PrivateScope, Public, HideBySig
+    SetProgress(UInt32): PrivateScope, Public, HideBySig
+    UpdateStatus(): PrivateScope, Public, HideBySig
+    SetUpdateForm(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    SetUpdateListBox(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    TryToClose(): PrivateScope, Public, HideBySig
+    ShowMessageBox(String, String, Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    tabControl_SelectedIndexChanged(Object, EventArgs): PrivateScope, Public, HideBySig
+    toolStripSleepMenuItem_Click(Object, EventArgs): PrivateScope, Public, HideBySig
+Class Compiler.SelectForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(Compiler.MenuForm): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Byte iSelectType : Public
