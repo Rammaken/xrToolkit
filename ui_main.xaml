@@ -10,20 +10,23 @@
         <TabControl>
             <TabItem HorizontalAlignment="Center" Height="20" Header="Tools" VerticalAlignment="Center" Width="54">
                 <Grid>
-                    <Button Content="Compile level&#xA;(SkyLoader)" HorizontalAlignment="Left" Margin="41,99,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand" Click="Button_Click_2"/>
+                    <Grid.Background>
+                        <ImageBrush/>
+                    </Grid.Background>
+                    <Button x:Name="btn_tool_compilelevel" Content="Compile level&#xA;(SkyLoader)" HorizontalAlignment="Left" Margin="41,99,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
                     <Label Content="Third party tools" HorizontalAlignment="Left" Margin="20,8,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-                    <Button Content="Icon Editor&#xD;&#xA;(SIE)" HorizontalAlignment="Left" Margin="41,234,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_iconeditor" Content="Icon Editor&#xD;&#xA;(SIE)" HorizontalAlignment="Left" Margin="41,234,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
                     <Separator Margin="20,47,20,0" VerticalAlignment="Top" Height="8"/>
                     <Label Content="SDK / Mapping" HorizontalAlignment="Left" Margin="41,68,0,0" VerticalAlignment="Top"/>
                     <Label Content="Textures" HorizontalAlignment="Left" Margin="41,203,0,0" VerticalAlignment="Top"/>
                     <Label Content="Sounds" HorizontalAlignment="Left" Margin="247,203,0,0" VerticalAlignment="Top"/>
-                    <Button Content="OGG Comments Editor&#xD;&#xA;(SAVAndT)" HorizontalAlignment="Left" Margin="247,234,0,0" VerticalAlignment="Top" Height="72" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
-                    <Button Content="THM Editor" HorizontalAlignment="Left" Margin="41,298,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_oggeditor" Content="OGG Comments Editor&#xD;&#xA;(SAVAndT)" HorizontalAlignment="Left" Margin="247,234,0,0" VerticalAlignment="Top" Height="72" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_thmeditor" Content="THM Editor" HorizontalAlignment="Left" Margin="41,298,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
                     <Label Content="Animations" HorizontalAlignment="Left" Margin="247,68,0,0" VerticalAlignment="Top"/>
-                    <Button Content="Animation File Editor&#xD;&#xA;(OMF)" HorizontalAlignment="Left" Margin="247,99,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_omfeditor" Content="Animation File Editor&#xD;&#xA;(OMF)" HorizontalAlignment="Left" Margin="247,99,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab_gamedata" HorizontalAlignment="Center" Height="20" Header="Gamedata unpacker" VerticalAlignment="Top" Width="123" Margin="0,-1,0,0">
+            <TabItem x:Name="tab_gamedata" HorizontalAlignment="Center" Height="20" Header="Gamedata unpacker" VerticalAlignment="Center" Width="123">
                 <Grid>
                     <Label Content="Database files input path" HorizontalAlignment="Left" Margin="33,28,0,0" VerticalAlignment="Top"/>
                     <Label Content="Unpacked files output path" HorizontalAlignment="Left" Margin="33,105,0,0" VerticalAlignment="Top"/>
@@ -35,7 +38,7 @@
                     <RadioButton Content="CS/CoP" HorizontalAlignment="Left" Margin="51,214,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand" IsChecked="True"/>
                     <RadioButton Content="SoC (WW)" HorizontalAlignment="Left" Margin="51,234,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
                     <RadioButton Content="SoC (Ru)" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
-                    <Button Content="Unpack" Margin="0,0,37,29" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="Button_Click"/>
+                    <Button Content="Unpack" Margin="0,0,37,29" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tab_map" Header="Level decompiler">
@@ -58,12 +61,13 @@
                             <Grid>
                                 <Label Content="Input path:" HorizontalAlignment="Left" Margin="35,29,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="input_ogfobj_input" HorizontalAlignment="Left" Margin="35,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="24" AllowDrop="False"/>
-                                <Label Content="Output path:" HorizontalAlignment="Left" Margin="35,107,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="input_ogfobj_output" HorizontalAlignment="Left" Margin="35,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="24" AllowDrop="False"/>
+                                <Label Content="Output path:" HorizontalAlignment="Left" Margin="35,92,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_ogfobj_output" HorizontalAlignment="Left" Margin="35,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="24" AllowDrop="False"/>
                                 <Button x:Name="btn_ogfobj_convert" Content="Convert" HorizontalAlignment="Center" Margin="0,304,0,0" VerticalAlignment="Top" Height="35" Width="176" Click="btn_ogfobj_convert_Click_2"/>
                                 <Button x:Name="btn_input_ogfobj" Content="Set" HorizontalAlignment="Left" Margin="401,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Width="46" Height="24" Click="btn_input_ogfobj_Click"/>
-                                <Button x:Name="btn_output_ogfobj" Content="Set" HorizontalAlignment="Left" Margin="401,138,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.05,-0.599" Click="btn_output_ogfobj_Click" Width="46" Height="24"/>
+                                <Button x:Name="btn_output_ogfobj" Content="Set" HorizontalAlignment="Left" Margin="401,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.05,-0.599" Click="btn_output_ogfobj_Click" Width="46" Height="24"/>
                                 <TextBox x:Name="status_ogfobj" HorizontalAlignment="Left" Margin="35,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="412" Height="92" IsEnabled="False"/>
+                                <CheckBox x:Name="check_ogfobj_autostore" Content="Store in rawdata automatically" HorizontalAlignment="Left" Margin="35,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.472,1.062" Click="disable_ogfobj_output"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="OMF to SKLS">

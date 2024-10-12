@@ -82,11 +82,6 @@ namespace xrToolkit
             
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -110,11 +105,6 @@ namespace xrToolkit
                 string path = dialog.SelectedPath;
                 input_db_output.Text = path;
             }
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private void btn_input_ogfobj_Click(object sender, RoutedEventArgs e)
@@ -143,54 +133,109 @@ namespace xrToolkit
 
         private void btn_ogfobj_convert_Click_2(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(input_ogfobj_input.Text) || string.IsNullOrWhiteSpace(input_ogfobj_output.Text))
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_ogfobj_input.Text))
             {
+                // If paths are empty...
                 System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                // Ruta del archivo .exe
-                string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
-                string inputPath = System.IO.Path.GetFullPath(input_ogfobj_input.Text);
-                string outputPath = System.IO.Path.GetFullPath(input_ogfobj_output.Text);
-                string[] ogfFiles = Directory.GetFiles(inputPath, "*.ogf").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
-
-                foreach (string file in ogfFiles)
+                if (check_ogfobj_autostore.IsChecked == true)
                 {
-                    status_ogfobj.Text += "Converting " + file + "...\n";
-                    // Argumentos que deseas pasar al .exe
-                    string arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + outputPath + "\\" + file + ".object";
-
-                    // Crear un nuevo proceso
-                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    convertOGFtoOBJECT();
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(input_ogfobj_output.Text))
                     {
-                        FileName = exePath,
-                        Arguments = arguments,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
-
-                    try
-                    {
-                        // Iniciar el proceso
-                        using (Process process = Process.Start(startInfo))
-                        {
-                            // Leer la salida del proceso
-                            using (StreamReader reader = process.StandardOutput)
-                            {
-                                status_ogfobj.Text += "Done!\n";
-                            }
-                        }
+                        System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                    catch (Exception ex)
+                    else
                     {
+                        convertOGFtoOBJECT();
+                    }
+                }
+            }
+        }
+
+        public void convertOGFtoOBJECT()
+        {
+            // If paths are filled:
+
+            // Declaring and getting paths
+            string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
+            string inputPath = System.IO.Path.GetFullPath(input_ogfobj_input.Text);
+            string outputPath = System.IO.Path.GetFullPath(input_ogfobj_output.Text);
+
+            // Stores all files in input path
+            string[] ogfFiles = Directory.GetFiles(inputPath, "*.ogf").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
+
+            // Loop for converting all files found
+            foreach (string file in ogfFiles)
+            {
+                // Status output
+                status_ogfobj.Text += "Converting " + file + "...\n";
+
+                // Arguments declaration
+                string arguments;
+
+                if (check_ogfobj_autostore.IsChecked == true)
+                {
+                    arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + System.IO.Path.GetFullPath("rawdata\\objects\\converter_output") + "\\" + file + ".object";
+                }
+                else
+                {
+                    arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + outputPath + "\\" + file + ".object";
+                }
+
+                // Declaring process with collected data
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                try
+                {
+                    // Starts process
+                    using (Process process = Process.Start(startInfo))
+                    {
+                        // Status output
+                        using (StreamReader reader = process.StandardOutput)
                         {
-                            System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            status_ogfobj.Text += "Done!\n";
                         }
                     }
                 }
-                System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                catch (Exception ex)
+                {
+                    // If something fails...
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            // FINISH
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        private void disable_ogfobj_output(object sender, RoutedEventArgs e)
+        {
+            // Disables or enables output path
+            if (check_ogfobj_autostore.IsChecked == true)
+            {
+                input_ogfobj_output.IsEnabled = false;
+                btn_output_ogfobj.IsEnabled = false;
+            }
+            else
+            {
+                input_ogfobj_output.IsEnabled = true;
+                btn_output_ogfobj.IsEnabled = true;
             }
         }
     }
