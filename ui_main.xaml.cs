@@ -34,52 +34,6 @@ namespace xrToolkit
 
         private void btn_decompile_map_Click(object sender, RoutedEventArgs e)
         {
-            if(input_map_name.Text.Equals("") || input_map_name.Text.Equals(null))
-            {
-                System.Windows.MessageBox.Show("Insert the level name", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else
-            {
-                string var_level_name = input_map_name.Text;
-                // Ruta del archivo .exe
-                string exePath = @"thirdtools/converter.exe";
-
-                // Argumentos que deseas pasar al .exe
-                string arguments = "-level sdk:" + var_level_name + " -mode le -with_lods";
-                System.Windows.MessageBox.Show(exePath + " " + arguments);
-
-                // Crear un nuevo proceso
-                ProcessStartInfo startInfo = new ProcessStartInfo
-                {
-                    FileName = exePath,
-                    Arguments = arguments,
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = false
-                };
-
-                try
-                {
-                    // Iniciar el proceso
-                    using (Process process = Process.Start(startInfo))
-                    {
-                        // Leer la salida del proceso
-                        using (StreamReader reader = process.StandardOutput)
-                        {
-                            string result = reader.ReadToEnd();
-                            System.Windows.MessageBox.Show(result);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    {
-                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-
-
-                }
-            }
-            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -237,6 +191,73 @@ namespace xrToolkit
                 input_ogfobj_output.IsEnabled = true;
                 btn_output_ogfobj.IsEnabled = true;
             }
+        }
+
+        private void set_input_db(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_db_input.Text = path;
+            }
+        }
+
+        private void set_output_db(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_db_output.Text = path;
+            }
+        }
+
+        private void btn_unpack_db_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void decompile_level(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(input_map_name.Text))
+            {
+                System.Windows.MessageBox.Show("Insert the level name", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                string var_level_name = input_map_name.Text;
+                string decompilation_code = "converter.exe -level sdk:" + var_level_name + " -mode le -with_lods";
+
+                System.Windows.MessageBox.Show(decompilation_code + "\npause");
+
+                status_level.Text += "Decompiling " + var_level_name + " map...\n";
+
+                // Ruta del archivo .bat
+                string batFilePath = System.IO.Path.GetFullPath(@"thirdtools\decompile_level.bat");
+
+                // Contenido del archivo .bat
+                string batContent = decompilation_code + "\npause";
+
+                // Crear y escribir en el archivo .bat
+                File.WriteAllText(batFilePath, batContent);
+
+                // Configurar el proceso para ejecutar el archivo .bat
+                ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe", "/c " + batFilePath);
+                processInfo.RedirectStandardOutput = true;
+                processInfo.CreateNoWindow = false;
+                processInfo.UseShellExecute = false;
+
+                // Ejecutar el archivo .bat
+                Process process = Process.Start(processInfo);
+                process.WaitForExit();
+            }
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            status_level.Text += "Finished...";
         }
     }
 }
