@@ -1,0 +1,29 @@
+﻿<Window x:Name="ui_main_xrtoolkit" x:Class="xrToolkit.ui_main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:xrToolkit"
+        mc:Ignorable="d"
+        Title="xrToolkit v1.0" Height="450" Width="500">
+    <Grid>
+        <TabControl>
+            <TabItem x:Name="tab_gamedata" HorizontalAlignment="Center" Height="20" Header="Gamedata unpacker" VerticalAlignment="Top" Width="123" Margin="0,-1,0,0">
+                <Grid/>
+            </TabItem>
+            <TabItem x:Name="tab_map" Header="Map decompiler">
+                <Grid>
+                    <Label Content="Map name:" HorizontalAlignment="Left" Margin="40,32,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="input_map_name" HorizontalAlignment="Left" Margin="40,58,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="194" Height="26"/>
+                    <CheckBox x:Name="check_lods_enabled" Content="With LODs" HorizontalAlignment="Left" Margin="40,129,0,0" VerticalAlignment="Top" IsChecked="False" Cursor="Hand"/>
+                    <Label Content="Settings" HorizontalAlignment="Left" Margin="40,101,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Decompile" Margin="0,0,38,46" RenderTransformOrigin="-0.746,0.606" HorizontalAlignment="Right" Width="141" Height="41" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab_converter" Header="Converter">
+                <Grid/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

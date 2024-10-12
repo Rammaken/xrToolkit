@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="00feb0a0f5fe73e964a8793207a2c010~c5_720x720.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="00feb0a0f5fe73e964a8793207a2c010~c5_720x720.jpeg" />
+  </ItemGroup>
+
+</Project>
