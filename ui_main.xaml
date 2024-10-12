@@ -9,15 +9,27 @@
     <Grid>
         <TabControl>
             <TabItem x:Name="tab_gamedata" HorizontalAlignment="Center" Height="20" Header="Gamedata unpacker" VerticalAlignment="Top" Width="123" Margin="0,-1,0,0">
-                <Grid/>
+                <Grid>
+                    <Label Content="Database files input path" HorizontalAlignment="Left" Margin="33,28,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Unpacked files output path" HorizontalAlignment="Left" Margin="33,105,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="input_db_input" HorizontalAlignment="Left" Margin="38,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357" Height="22"/>
+                    <TextBox x:Name="input_db_output" HorizontalAlignment="Left" Margin="38,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357" Height="23"/>
+                    <Button x:Name="btn_input_db" Content="Set" HorizontalAlignment="Left" Margin="400,60,0,0" VerticalAlignment="Top" Width="37" Height="22" Click="Button_Click_1" Cursor="Hand"/>
+                    <Button x:Name="btn_output_db" Content="Set" HorizontalAlignment="Left" Margin="400,133,0,0" VerticalAlignment="Top" Width="37" Height="23" Click="btn_output_db_Click" Cursor="Hand"/>
+                    <Label Content="Settings" HorizontalAlignment="Left" Margin="40,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.532,-1"/>
+                    <RadioButton Content="CS/CoP" HorizontalAlignment="Left" Margin="51,214,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
+                    <RadioButton Content="SoC (WW)" HorizontalAlignment="Left" Margin="51,234,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
+                    <RadioButton Content="SoC (Ru)" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
+                    <Button Content="Unpack" Margin="0,0,37,29" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="Button_Click"/>
+                </Grid>
             </TabItem>
             <TabItem x:Name="tab_map" Header="Map decompiler">
                 <Grid>
                     <Label Content="Map name:" HorizontalAlignment="Left" Margin="40,32,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="input_map_name" HorizontalAlignment="Left" Margin="40,58,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="194" Height="26"/>
+                    <TextBox x:Name="input_map_name" Margin="40,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" HorizontalAlignment="Left" Width="194" AllowDrop="False"/>
                     <CheckBox x:Name="check_lods_enabled" Content="With LODs" HorizontalAlignment="Left" Margin="40,129,0,0" VerticalAlignment="Top" IsChecked="False" Cursor="Hand"/>
                     <Label Content="Settings" HorizontalAlignment="Left" Margin="40,101,0,0" VerticalAlignment="Top"/>
-                    <Button Content="Decompile" Margin="0,0,38,46" RenderTransformOrigin="-0.746,0.606" HorizontalAlignment="Right" Width="141" Height="41" VerticalAlignment="Bottom"/>
+                    <Button x:Name="btn_decompile_map" Content="Decompile" Margin="0,0,38,46" RenderTransformOrigin="-0.746,0.606" HorizontalAlignment="Right" Width="141" Height="41" VerticalAlignment="Bottom" Click="btn_decompile_map_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tab_converter" Header="Converter">

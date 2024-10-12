@@ -7,14 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="00feb0a0f5fe73e964a8793207a2c010~c5_720x720.jpeg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="00feb0a0f5fe73e964a8793207a2c010~c5_720x720.jpeg" />
-  </ItemGroup>
 
 </Project>

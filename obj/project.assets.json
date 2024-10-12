@@ -74,7 +74,7 @@
           "Microsoft.Windows.SDK.NET.Ref": {
             "privateAssets": "all"
           },
-          "Microsoft.WindowsDesktop.App.WPF": {
+          "Microsoft.WindowsDesktop.App": {
             "privateAssets": "none"
           }
         },
