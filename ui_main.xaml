@@ -40,15 +40,41 @@
             </TabItem>
             <TabItem x:Name="tab_map" Header="Level decompiler">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160*"/>
+                        <ColumnDefinition Width="87*"/>
+                    </Grid.ColumnDefinitions>
                     <Label Content="Level name:" HorizontalAlignment="Left" Margin="40,32,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="input_map_name" Margin="40,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" HorizontalAlignment="Left" Width="194" AllowDrop="False"/>
                     <CheckBox x:Name="check_lods_enabled" Content="With LODs" HorizontalAlignment="Left" Margin="40,129,0,0" VerticalAlignment="Top" IsChecked="False" Cursor="Hand"/>
                     <Label Content="Settings" HorizontalAlignment="Left" Margin="40,101,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btn_decompile_map" Content="Decompile" Margin="0,0,38,46" RenderTransformOrigin="-0.746,0.606" HorizontalAlignment="Right" Width="141" Height="41" VerticalAlignment="Bottom" Click="btn_decompile_map_Click"/>
+                    <Button x:Name="btn_decompile_map" Content="Decompile" Margin="0,0,38,46" RenderTransformOrigin="-0.746,0.606" HorizontalAlignment="Right" Width="141" Height="41" VerticalAlignment="Bottom" Click="btn_decompile_map_Click" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tab_converter" Header="Converter">
-                <Grid/>
+                <Grid>
+                    <TabControl>
+                        <TabItem Header="OGF to OBJECT">
+                            <Grid>
+                                <Label Content="Input path:" HorizontalAlignment="Left" Margin="35,29,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_ogfobj_input" HorizontalAlignment="Left" Margin="35,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="24" AllowDrop="False"/>
+                                <Label Content="Output path:" HorizontalAlignment="Left" Margin="35,107,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_ogfobj_output" HorizontalAlignment="Left" Margin="35,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="24" AllowDrop="False"/>
+                                <Button x:Name="btn_ogfobj_convert" Content="Convert" HorizontalAlignment="Center" Margin="0,304,0,0" VerticalAlignment="Top" Height="35" Width="176" Click="btn_ogfobj_convert_Click_2"/>
+                                <Button x:Name="btn_input_ogfobj" Content="Set" HorizontalAlignment="Left" Margin="401,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Width="46" Height="24" Click="btn_input_ogfobj_Click"/>
+                                <Button x:Name="btn_output_ogfobj" Content="Set" HorizontalAlignment="Left" Margin="401,138,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.05,-0.599" Click="btn_output_ogfobj_Click" Width="46" Height="24"/>
+                                <TextBox x:Name="status_ogfobj" HorizontalAlignment="Left" Margin="35,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="412" Height="92" IsEnabled="False"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="OMF to SKLS">
+                            <Grid/>
+                        </TabItem>
+                        <TabItem HorizontalAlignment="Center" Height="20" Header="DDS to TGA" VerticalAlignment="Top" Width="76" Margin="0,-1,0,0"/>
+                        <TabItem HorizontalAlignment="Center" Height="20" Header="OGG to WAV" VerticalAlignment="Top" Width="84" Margin="0,-1,0,0">
+                            <Grid/>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
             </TabItem>
         </TabControl>
 
