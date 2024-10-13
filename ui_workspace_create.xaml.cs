@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace xrToolkit
 {
@@ -28,7 +29,7 @@ namespace xrToolkit
             string workspace_name = input_workcreate_name.Text;
             string gamedata_path = System.IO.Path.GetFullPath(input_workcreate_gamedatapath.Text);
             string rawdata_path = System.IO.Path.GetFullPath(input_workcreate_rawdatapath.Text);
-            string workspace_file_path = System.IO.Path.GetFullPath(@"workspace_");
+            string workspace_file_path = System.IO.Path.GetFullPath(@"workspace_" + workspace_name + ".xml");
 
             // Contenido que se va a escribir en el archivo
             string content = "<workspace>\r\n    <value name=\"gamedata_path\">" + gamedata_path + "</value>\r\n    <value name=\"rawdata_path\">" + rawdata_path + "</value>\r\n</workspace>";
@@ -37,6 +38,34 @@ namespace xrToolkit
             {
                 // Crear y escribir en el archivo
                 File.WriteAllText(workspace_file_path, content);
+
+                try
+                {
+                    // Cargar el documento XML
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(System.IO.Path.GetFullPath(@"index_workspaces.xml"));
+
+                    // Crear un nuevo elemento
+                    XmlElement nuevoElemento = doc.CreateElement("value");
+                    nuevoElemento.InnerText = workspace_name;
+
+                    // Seleccionar el nodo donde se agregará el nuevo elemento
+                    XmlNode nodoPadre = doc.SelectSingleNode("workspaces");
+
+
+                    // Agregar el nuevo elemento al nodo padre
+                    nodoPadre.AppendChild(nuevoElemento);
+
+                    // Guardar los cambios en el archivo XML
+                    doc.Save(System.IO.Path.GetFullPath(@"index_workspaces.xml"));
+
+                    System.Windows.MessageBox.Show("Workspace " + workspace_name + " created sucessfully", "Done", MessageBoxButton.OK, MessageBoxImage.Question);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             } catch(Exception ex)
             {
                 System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);

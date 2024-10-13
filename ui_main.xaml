@@ -36,7 +36,7 @@
                     <TextBox x:Name="input_workspace_gamedata" Margin="191,93,80,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24"/>
                     <Button x:Name="btn_workspace_gamedata" Content="Set" Margin="0,93,29,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Height="24" Click="btn_workspace_gamedata_Click" HorizontalAlignment="Right" Width="46"/>
                     <Button x:Name="btn_workspace_rawdata" Content="Set" Margin="0,190,29,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Height="24" Click="btn_workspace_rawdata_Click" HorizontalAlignment="Right" Width="46"/>
-                    <Button x:Name="btn_save_workspace" Content="Save" Margin="271,265,115,0" Height="35" VerticalAlignment="Top"/>
+                    <Button x:Name="btn_save_workspace" Content="Save" Margin="271,265,115,0" Height="35" VerticalAlignment="Top" Click="btn_save_workspace_Click"/>
                     <Button x:Name="btn_create_workspace" Content="Create" HorizontalAlignment="Left" Margin="23,0,0,62" Width="54" Height="20" VerticalAlignment="Bottom" Click="create_workspace"/>
                     <Button x:Name="delete_workspace" Content="Delete" HorizontalAlignment="Left" Margin="82,0,0,62" Width="49" Height="20" VerticalAlignment="Bottom"/>
                 </Grid>
@@ -100,7 +100,7 @@
         </TabControl>
         <ToolBar x:Name="combo_workspace" Height="32" VerticalAlignment="Top" Background="#FFEDEDED">
             <Label Content="Selected workspace:"/>
-            <ComboBox x:Name="combo_workspaces" Width="120" Height="12"/>
+            <ComboBox x:Name="combo_workspaces" Width="120" Height="12" SelectedIndex="0"/>
         </ToolBar>
 
     </Grid>

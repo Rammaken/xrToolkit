@@ -32,6 +32,8 @@ namespace xrToolkit
         public ui_main()
         {
             InitializeComponent();
+            combo_workspaces.Items.Clear();
+            list_workspaces.Items.Clear();
             loadWorkspaces();
             
         }
@@ -51,7 +53,7 @@ namespace xrToolkit
                 XmlNode root = xmlDoc.DocumentElement;
 
                 // Recorrer los nodos hijo
-                foreach (XmlNode node in root.SelectNodes("value[@name='workspace']"))
+                foreach (XmlNode node in root.SelectNodes("value"))
                 {
                     // Obtener el valor del nodo
                     string workspaceName = node.InnerText;
@@ -295,13 +297,27 @@ namespace xrToolkit
 
         private void btn_workspace_gamedata_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_workspace_gamedata.Text = path;
+            }
 
         }
 
         private void btn_workspace_rawdata_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_workspace_rawdata.Text = path;
+            }
         }
 
         private void load_workspace_data(object sender, SelectionChangedEventArgs e)
@@ -353,7 +369,45 @@ namespace xrToolkit
         private void create_workspace(object sender, RoutedEventArgs e)
         {
             ui_workspace_create WorkspaceCreatorWindow = new ui_workspace_create();
-            WorkspaceCreatorWindow.Show();
+            WorkspaceCreatorWindow.ShowDialog();
+            combo_workspaces.Items.Clear();
+            list_workspaces.Items.Clear();
+            loadWorkspaces();
+        }
+
+        private void btn_save_workspace_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(list_workspaces.SelectedItem.ToString()))
+            {
+                string selectedWorkspace = list_workspaces.SelectedItem.ToString();
+                string newGamedataPath = System.IO.Path.GetFullPath(input_workspace_gamedata.Text);
+                string newRawdataPath = System.IO.Path.GetFullPath(input_workspace_rawdata.Text);
+
+                try
+                {
+                    // Cargar el archivo XML
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml"));
+
+                    // Seleccionar el nodo que deseas modificar
+                    XmlNode gamedataNode = doc.SelectSingleNode("//value[@name='gamedata_path']");
+                    XmlNode rawdataNode = doc.SelectSingleNode("//value[@name='rawdata_path']");
+
+                    // Reemplazar el valor del nodo
+                    gamedataNode.InnerText = newGamedataPath;
+                    rawdataNode.InnerText = newRawdataPath;
+
+                    // Guardar los cambios en el archivo XML
+                    doc.Save(System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml"));
+                    System.Windows.MessageBox.Show("Changes applied successfully to the workspace.", "Done", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            System.Windows.MessageBox.Show("Select a workspace first.", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
         }
     }
-}
+
