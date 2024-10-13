@@ -1,0 +1,21 @@
+﻿<Window x:Class="xrToolkit.ui_workspace_create"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:xrToolkit"
+        mc:Ignorable="d"
+        Title="Workspace Creator" Height="340" Width="446">
+    <Grid>
+        <Label Content="Workspace name" HorizontalAlignment="Left" Margin="38,14,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="input_workcreate_name" HorizontalAlignment="Left" Margin="38,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" Height="25"/>
+        <Label Content="Gamedata path" HorizontalAlignment="Left" Margin="38,95,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="input_workcreate_gamedatapath" HorizontalAlignment="Left" Margin="38,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" Height="25"/>
+        <Label Content="Rawdata path" HorizontalAlignment="Left" Margin="38,153,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="input_workcreate_rawdatapath" HorizontalAlignment="Left" Margin="38,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" Height="25"/>
+        <CheckBox x:Name="check_workcreate_fillbase" Content="Fill workspace with base files" HorizontalAlignment="Left" Margin="38,219,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_workcreate_create" Content="Create" HorizontalAlignment="Center" Margin="0,258,0,0" VerticalAlignment="Top" Width="114" Height="33" Click="create_workspace"/>
+        <Button x:Name="btn_workcreate_gamedata" Content="Set" HorizontalAlignment="Left" Margin="361,115,0,0" VerticalAlignment="Top" Height="25" Width="49" Click="btn_workcreate_gamedata_Click"/>
+        <Button x:Name="btn_workcreate_rawdata" Content="Set" HorizontalAlignment="Left" Margin="361,179,0,0" VerticalAlignment="Top" Height="25" Width="49" Click="btn_workcreate_rawdata_Click"/>
+    </Grid>
+</Window>

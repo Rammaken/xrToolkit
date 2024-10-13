@@ -7,23 +7,38 @@
         mc:Ignorable="d"
         Title="xrToolkit v1.0" Height="450" Width="500">
     <Grid>
-        <TabControl>
+        <TabControl Margin="0,32,0,0">
             <TabItem HorizontalAlignment="Center" Height="20" Header="Tools" VerticalAlignment="Center" Width="54">
                 <Grid>
                     <Grid.Background>
                         <ImageBrush/>
                     </Grid.Background>
-                    <Button x:Name="btn_tool_compilelevel" Content="Compile level&#xA;(SkyLoader)" HorizontalAlignment="Left" Margin="41,99,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
-                    <Label Content="Third party tools" HorizontalAlignment="Left" Margin="20,8,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-                    <Button x:Name="btn_tool_iconeditor" Content="Icon Editor&#xD;&#xA;(SIE)" HorizontalAlignment="Left" Margin="41,234,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
-                    <Separator Margin="20,47,20,0" VerticalAlignment="Top" Height="8"/>
-                    <Label Content="SDK / Mapping" HorizontalAlignment="Left" Margin="41,68,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Textures" HorizontalAlignment="Left" Margin="41,203,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Sounds" HorizontalAlignment="Left" Margin="247,203,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btn_tool_oggeditor" Content="OGG Comments Editor&#xD;&#xA;(SAVAndT)" HorizontalAlignment="Left" Margin="247,234,0,0" VerticalAlignment="Top" Height="72" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
-                    <Button x:Name="btn_tool_thmeditor" Content="THM Editor" HorizontalAlignment="Left" Margin="41,298,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
-                    <Label Content="Animations" HorizontalAlignment="Left" Margin="247,68,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btn_tool_omfeditor" Content="Animation File Editor&#xD;&#xA;(OMF)" HorizontalAlignment="Left" Margin="247,99,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_compilelevel" Content="Compile level&#xA;(SkyLoader)" HorizontalAlignment="Left" Margin="41,112,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Label Content="Third party tools" HorizontalAlignment="Left" Margin="20,21,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+                    <Button x:Name="btn_tool_iconeditor" Content="Icon Editor&#xA;(SIE)" HorizontalAlignment="Left" Margin="41,210,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Separator Margin="20,60,20,0" VerticalAlignment="Top" Height="8"/>
+                    <Label Content="SDK / Mapping" HorizontalAlignment="Left" Margin="41,81,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Textures" HorizontalAlignment="Left" Margin="41,179,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Sounds" HorizontalAlignment="Left" Margin="247,179,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btn_tool_oggeditor" Content="OGG Comments Editor&#xA;(SAVAndT)" HorizontalAlignment="Left" Margin="247,210,0,0" VerticalAlignment="Top" Height="72" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_thmeditor" Content="THM Editor" HorizontalAlignment="Left" Margin="41,274,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Label Content="Animations" HorizontalAlignment="Left" Margin="247,81,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btn_tool_omfeditor" Content="Animation File Editor&#xA;(OMF)" HorizontalAlignment="Left" Margin="247,112,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                </Grid>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" Height="20" Header="Workspaces" VerticalAlignment="Top" Width="75" Margin="0,-1,0,0">
+                <Grid>
+                    <ListBox x:Name="list_workspaces" Margin="20,62,0,87" HorizontalAlignment="Left" Width="150" SelectionChanged="load_workspace_data"/>
+                    <Label Content="Workspaces" HorizontalAlignment="Left" Margin="20,31,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Gamedata path" HorizontalAlignment="Left" Margin="191,62,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Rawdata path" HorizontalAlignment="Left" Margin="191,159,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="input_workspace_rawdata" Margin="191,190,80,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24"/>
+                    <TextBox x:Name="input_workspace_gamedata" Margin="191,93,80,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24"/>
+                    <Button x:Name="btn_workspace_gamedata" Content="Set" Margin="0,93,29,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Height="24" Click="btn_workspace_gamedata_Click" HorizontalAlignment="Right" Width="46"/>
+                    <Button x:Name="btn_workspace_rawdata" Content="Set" Margin="0,190,29,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Height="24" Click="btn_workspace_rawdata_Click" HorizontalAlignment="Right" Width="46"/>
+                    <Button x:Name="btn_save_workspace" Content="Save" Margin="271,265,115,0" Height="35" VerticalAlignment="Top"/>
+                    <Button x:Name="btn_create_workspace" Content="Create" HorizontalAlignment="Left" Margin="23,0,0,62" Width="54" Height="20" VerticalAlignment="Bottom" Click="create_workspace"/>
+                    <Button x:Name="delete_workspace" Content="Delete" HorizontalAlignment="Left" Margin="82,0,0,62" Width="49" Height="20" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tab_gamedata" HorizontalAlignment="Center" Height="20" Header="Gamedata unpacker" VerticalAlignment="Center" Width="123">
@@ -39,7 +54,7 @@
                     <Button x:Name="btn_output_db" Content="Set" Margin="0,133,48,0" VerticalAlignment="Top" Height="23" Click="set_output_db" Cursor="Hand" Background="WhiteSmoke" HorizontalAlignment="Right" Width="46"/>
                     <Label Content="Settings" HorizontalAlignment="Left" Margin="40,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.532,-1"/>
                     <RadioButton x:Name="rdn_db_game_cscop" Content="CS/CoP" HorizontalAlignment="Left" Margin="51,214,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand" IsChecked="True"/>
-                    <RadioButton x:Name="rdn_db_game_socww" Content="SoC (WW)" HorizontalAlignment="Left" Margin="52,234,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
+                    <RadioButton x:Name="rdn_db_game_socww" Content="SoC (WW)" HorizontalAlignment="Left" Margin="51,234,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
                     <RadioButton x:Name="rdn_db_game_socru" Content="SoC (Ru)" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" GroupName="game_unpack" Cursor="Hand"/>
                     <Button x:Name="btn_unpack_db" Content="Unpack" Margin="0,0,62,36" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="btn_unpack_db_Click"/>
                     <TextBox x:Name="status_db" Margin="184,196,48,98" TextWrapping="Wrap" IsEnabled="False" UseLayoutRounding="False"/>
@@ -65,7 +80,7 @@
                                 <TextBox x:Name="input_ogfobj_input" Margin="30,52,98,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" AllowDrop="False"/>
                                 <Label Content="Output path" HorizontalAlignment="Left" Margin="30,84,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="input_ogfobj_output" Margin="30,114,98,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" AllowDrop="False"/>
-                                <Button x:Name="btn_ogfobj_convert" Content="Convert" Margin="150,296,162,48" Click="btn_ogfobj_convert_Click_2"/>
+                                <Button x:Name="btn_ogfobj_convert" Content="Convert" Margin="148,0,164,33" Click="btn_ogfobj_convert_Click_2" Height="45" VerticalAlignment="Bottom"/>
                                 <Button x:Name="btn_input_ogfobj" Content="Set" Margin="0,52,46,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,-0.349" Height="24" Click="btn_input_ogfobj_Click" HorizontalAlignment="Right" Width="46"/>
                                 <Button x:Name="btn_output_ogfobj" Content="Set" Margin="0,114,46,0" VerticalAlignment="Top" RenderTransformOrigin="0.05,-0.599" Click="btn_output_ogfobj_Click" Height="24" HorizontalAlignment="Right" Width="46"/>
                                 <TextBox x:Name="status_ogfobj" Margin="30,180,46,106" TextWrapping="Wrap" IsEnabled="False"/>
@@ -83,6 +98,10 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <ToolBar x:Name="combo_workspace" Height="32" VerticalAlignment="Top" Background="#FFEDEDED">
+            <Label Content="Selected workspace:"/>
+            <ComboBox x:Name="combo_workspaces" Width="120" Height="12"/>
+        </ToolBar>
 
     </Grid>
 </Window>

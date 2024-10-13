@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -30,6 +32,39 @@ namespace xrToolkit
         public ui_main()
         {
             InitializeComponent();
+            loadWorkspaces();
+            
+        }
+
+        public void loadWorkspaces()
+        {
+            // Ruta del archivo XML
+            string workspaces_index = System.IO.Path.GetFullPath(@"index_workspaces.xml");
+
+            try
+            {
+                // Cargar el archivo XML
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(workspaces_index);
+
+                // Obtener el nodo raíz
+                XmlNode root = xmlDoc.DocumentElement;
+
+                // Recorrer los nodos hijo
+                foreach (XmlNode node in root.SelectNodes("value[@name='workspace']"))
+                {
+                    // Obtener el valor del nodo
+                    string workspaceName = node.InnerText;
+
+                    // Agregar el valor al ListBox
+                    combo_workspaces.Items.Add(workspaceName);
+                    list_workspaces.Items.Add(workspaceName);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btn_decompile_map_Click(object sender, RoutedEventArgs e)
@@ -233,8 +268,6 @@ namespace xrToolkit
                 string var_level_name = input_map_name.Text;
                 string decompilation_code = "converter.exe -level sdk:" + var_level_name + " -mode le -with_lods";
 
-                System.Windows.MessageBox.Show(decompilation_code + "\npause");
-
                 status_level.Text += "Decompiling " + var_level_name + " map...\n";
 
                 // Ruta del archivo .bat
@@ -258,6 +291,69 @@ namespace xrToolkit
             }
             System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             status_level.Text += "Finished...";
+        }
+
+        private void btn_workspace_gamedata_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void btn_workspace_rawdata_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void load_workspace_data(object sender, SelectionChangedEventArgs e)
+        {
+            if (list_workspaces.SelectedItem != null)
+            {
+                // Obtener el texto del elemento seleccionado
+                string selectedWorkspace = list_workspaces.SelectedItem.ToString();
+                // Ruta del archivo XML
+                string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml");
+
+                try
+                {
+                    // Cargar el archivo XML
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(workspace_file);
+
+                    // Obtener el nodo raíz
+                    XmlNode root = xmlDoc.DocumentElement;
+
+                    // Recorrer los nodos hijo
+                    foreach (XmlNode node in root.SelectNodes("value[@name='gamedata_path']"))
+                    {
+                        // Obtener el valor del nodo
+                        string gamedataPath = node.InnerText;
+
+                        input_workspace_gamedata.Text = gamedataPath;
+                    }
+
+                    // Recorrer los nodos hijo
+                    foreach (XmlNode node in root.SelectNodes("value[@name='rawdata_path']"))
+                    {
+                        // Obtener el valor del nodo
+                        string rawdataPath = node.InnerText;
+
+                        input_workspace_rawdata.Text = rawdataPath;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            } else
+            {
+
+            }
+        }
+
+        private void create_workspace(object sender, RoutedEventArgs e)
+        {
+            ui_workspace_create WorkspaceCreatorWindow = new ui_workspace_create();
+            WorkspaceCreatorWindow.Show();
         }
     }
 }
