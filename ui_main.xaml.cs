@@ -408,6 +408,81 @@ namespace xrToolkit
             }
             System.Windows.MessageBox.Show("Select a workspace first.", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+
+        private void open_levelcompiler(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process levelcompiler_process = new Process();
+                levelcompiler_process.StartInfo.FileName = System.IO.Path.GetFullPath(@"bin\compilers_sky_x64\xrCompiler.exe");
+                levelcompiler_process.StartInfo.UseShellExecute = false;
+                levelcompiler_process.Start();
+            } catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btn_tool_omfeditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process levelcompiler_process = new Process();
+                levelcompiler_process.StartInfo.FileName = System.IO.Path.GetFullPath(@"thirdtools\OMFEditor.exe");
+                levelcompiler_process.StartInfo.UseShellExecute = false;
+                levelcompiler_process.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btn_tool_iconeditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process levelcompiler_process = new Process();
+                levelcompiler_process.StartInfo.FileName = System.IO.Path.GetFullPath(@"thirdtools\SIE.exe");
+                levelcompiler_process.StartInfo.UseShellExecute = false;
+                levelcompiler_process.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btn_tool_thmeditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process levelcompiler_process = new Process();
+                levelcompiler_process.StartInfo.FileName = System.IO.Path.GetFullPath(@"thirdtools\THMEditor.exe");
+                levelcompiler_process.StartInfo.UseShellExecute = false;
+                levelcompiler_process.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btn_tool_oggeditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process levelcompiler_process = new Process();
+                levelcompiler_process.StartInfo.FileName = System.IO.Path.GetFullPath(@"thirdtools\SAVandT.exe");
+                levelcompiler_process.StartInfo.UseShellExecute = false;
+                levelcompiler_process.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
+}
+   
 

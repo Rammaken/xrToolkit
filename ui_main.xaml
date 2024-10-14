@@ -13,17 +13,17 @@
                     <Grid.Background>
                         <ImageBrush/>
                     </Grid.Background>
-                    <Button x:Name="btn_tool_compilelevel" Content="Compile level&#xA;(SkyLoader)" HorizontalAlignment="Left" Margin="41,112,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_compilelevel" Content="Compile level&#xA;(SkyLoader)" HorizontalAlignment="Left" Margin="41,112,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand" Click="open_levelcompiler"/>
                     <Label Content="Third party tools" HorizontalAlignment="Left" Margin="20,21,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-                    <Button x:Name="btn_tool_iconeditor" Content="Icon Editor&#xA;(SIE)" HorizontalAlignment="Left" Margin="41,210,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_iconeditor" Content="Icon Editor&#xA;(SIE)" HorizontalAlignment="Left" Margin="41,210,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand" Click="btn_tool_iconeditor_Click"/>
                     <Separator Margin="20,60,20,0" VerticalAlignment="Top" Height="8"/>
                     <Label Content="SDK / Mapping" HorizontalAlignment="Left" Margin="41,81,0,0" VerticalAlignment="Top"/>
                     <Label Content="Textures" HorizontalAlignment="Left" Margin="41,179,0,0" VerticalAlignment="Top"/>
                     <Label Content="Sounds" HorizontalAlignment="Left" Margin="247,179,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btn_tool_oggeditor" Content="OGG Comments Editor&#xA;(SAVAndT)" HorizontalAlignment="Left" Margin="247,210,0,0" VerticalAlignment="Top" Height="72" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
-                    <Button x:Name="btn_tool_thmeditor" Content="THM Editor" HorizontalAlignment="Left" Margin="41,274,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_oggeditor" Content="OGG Comments Editor&#xA;(SAVAndT)" HorizontalAlignment="Left" Margin="247,210,0,0" VerticalAlignment="Top" Height="72" Width="149" Background="#FFEFEFEF" Cursor="Hand" Click="btn_tool_oggeditor_Click"/>
+                    <Button x:Name="btn_tool_thmeditor" Content="THM Editor" HorizontalAlignment="Left" Margin="41,274,0,0" VerticalAlignment="Top" Height="50" Width="149" Background="#FFEFEFEF" Cursor="Hand" Click="btn_tool_thmeditor_Click"/>
                     <Label Content="Animations" HorizontalAlignment="Left" Margin="247,81,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btn_tool_omfeditor" Content="Animation File Editor&#xA;(OMF)" HorizontalAlignment="Left" Margin="247,112,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand"/>
+                    <Button x:Name="btn_tool_omfeditor" Content="Animation File Editor&#xA;(OMF)" HorizontalAlignment="Left" Margin="247,112,0,0" VerticalAlignment="Top" Height="61" Width="149" Background="#FFEFEFEF" Cursor="Hand" Click="btn_tool_omfeditor_Click"/>
                 </Grid>
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="20" Header="Workspaces" VerticalAlignment="Top" Width="75" Margin="0,-1,0,0">
