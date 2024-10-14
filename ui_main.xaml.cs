@@ -301,7 +301,12 @@ namespace xrToolkit
 
         public void convertOGFtoOBJECT()
         {
-            // If paths are filled:
+            string workspaceName = combo_workspaces.SelectedItem.ToString();
+            string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
+
+            XDocument xmlDoc = XDocument.Load(workspace_file);
+
+            string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
 
             // Declaring and getting paths
             string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
@@ -322,7 +327,7 @@ namespace xrToolkit
 
                 if (check_ogfobj_autostore.IsChecked == true)
                 {
-                    arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + System.IO.Path.GetFullPath("rawdata\\objects\\converter_output") + "\\" + file + ".object";
+                    arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + System.IO.Path.GetFullPath(rawdataPath + "\\converter_output") + "\\" + file + ".object";
                 }
                 else
                 {
@@ -707,6 +712,148 @@ namespace xrToolkit
         private void changeWorkspace(object sender, SelectionChangedEventArgs e)
         {
             applyWorkspace();
+        }
+
+        private void check_ogfobj_autostore_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_input_omfskls_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_omfskls_input.Text = path;
+            }
+        }
+
+        private void btn_output_omfskls_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_omfskls_output.Text = path;
+            }
+        }
+
+        private void btn_omfskls_convert_Click_2(object sender, RoutedEventArgs e)
+        {
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_omfskls_input.Text))
+            {
+                // If paths are empty...
+                System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                if (check_omfskls_autostore.IsChecked == true)
+                {
+                    convertOMFtoSKLS();
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(input_omfskls_output.Text))
+                    {
+                        System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        convertOMFtoSKLS();
+                    }
+                }
+            }
+        }
+
+        public void convertOMFtoSKLS()
+        {
+            string workspaceName = combo_workspaces.SelectedItem.ToString();
+            string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
+
+            XDocument xmlDoc = XDocument.Load(workspace_file);
+
+            string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
+
+            // Declaring and getting paths
+            string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
+            string inputPath = System.IO.Path.GetFullPath(input_omfskls_input.Text);
+            string outputPath = System.IO.Path.GetFullPath(input_omfskls_output.Text);
+
+            // Stores all files in input path
+            string[] omfFiles = Directory.GetFiles(inputPath, "*.omf").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
+
+            // Loop for converting all files found
+            foreach (string file in omfFiles)
+            {
+                // Status output
+                status_omfskls.Text += "Converting " + file + "...\n";
+
+                // Arguments declaration
+                string arguments;
+
+                if (check_omfskls_autostore.IsChecked == true)
+                {
+                    arguments = "-omf -skls " + inputPath + "\\" + file + ".omf -out " + System.IO.Path.GetFullPath(rawdataPath + "\\converter_output") + "\\" + file + ".skls";
+                }
+                else
+                {
+                    arguments = "-omf -skls " + inputPath + "\\" + file + ".omf -out " + outputPath + "\\" + file + ".skls";
+                }
+
+                // Declaring process with collected data
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                try
+                {
+                    // Starts process
+                    using (Process process = Process.Start(startInfo))
+                    {
+                        // Status output
+                        using (StreamReader reader = process.StandardOutput)
+                        {
+                            status_omfskls.Text += "Done!\n";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If something fails...
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            // FINISH
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        private void disable_omfskls_output(object sender, RoutedEventArgs e)
+        {
+            // Disables or enables output path
+            if (check_omfskls_autostore.IsChecked == true)
+            {
+                input_omfskls_output.IsEnabled = false;
+                btn_output_omfskls.IsEnabled = false;
+            }
+            else
+            {
+                input_omfskls_output.IsEnabled = true;
+                btn_output_omfskls.IsEnabled = true;
+            }
         }
     }
 }
