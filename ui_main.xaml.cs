@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -291,7 +292,7 @@ namespace xrToolkit
                 Process process = Process.Start(processInfo);
                 process.WaitForExit();
             }
-            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
             status_level.Text += "Finished...";
         }
 
@@ -324,6 +325,7 @@ namespace xrToolkit
         {
             if (list_workspaces.SelectedItem != null)
             {
+                btn_save_workspace.IsEnabled = true;
                 // Obtener el texto del elemento seleccionado
                 string selectedWorkspace = list_workspaces.SelectedItem.ToString();
                 // Ruta del archivo XML
@@ -361,6 +363,7 @@ namespace xrToolkit
                     System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             } else
+                btn_save_workspace.IsEnabled = false;
             {
 
             }
@@ -377,36 +380,47 @@ namespace xrToolkit
 
         private void btn_save_workspace_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(list_workspaces.SelectedItem.ToString()))
+            if(string.IsNullOrWhiteSpace(input_workspace_gamedata.Text) || string.IsNullOrWhiteSpace(input_workspace_rawdata.Text))
             {
-                string selectedWorkspace = list_workspaces.SelectedItem.ToString();
-                string newGamedataPath = System.IO.Path.GetFullPath(input_workspace_gamedata.Text);
-                string newRawdataPath = System.IO.Path.GetFullPath(input_workspace_rawdata.Text);
-
-                try
+                System.Windows.MessageBox.Show("Insert all the paths.", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            } else
+            {
+                if (list_workspaces.SelectedItem != null)
                 {
-                    // Cargar el archivo XML
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml"));
+                    string selectedWorkspace = list_workspaces.SelectedItem.ToString();
+                    string newGamedataPath = System.IO.Path.GetFullPath(input_workspace_gamedata.Text);
+                    string newRawdataPath = System.IO.Path.GetFullPath(input_workspace_rawdata.Text);
 
-                    // Seleccionar el nodo que deseas modificar
-                    XmlNode gamedataNode = doc.SelectSingleNode("//value[@name='gamedata_path']");
-                    XmlNode rawdataNode = doc.SelectSingleNode("//value[@name='rawdata_path']");
+                    try
+                    {
+                        // Cargar el archivo XML
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml"));
 
-                    // Reemplazar el valor del nodo
-                    gamedataNode.InnerText = newGamedataPath;
-                    rawdataNode.InnerText = newRawdataPath;
+                        // Seleccionar el nodo que deseas modificar
+                        XmlNode gamedataNode = doc.SelectSingleNode("//value[@name='gamedata_path']");
+                        XmlNode rawdataNode = doc.SelectSingleNode("//value[@name='rawdata_path']");
 
-                    // Guardar los cambios en el archivo XML
-                    doc.Save(System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml"));
-                    System.Windows.MessageBox.Show("Changes applied successfully to the workspace.", "Done", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        // Reemplazar el valor del nodo
+                        gamedataNode.InnerText = newGamedataPath;
+                        rawdataNode.InnerText = newRawdataPath;
+
+                        // Guardar los cambios en el archivo XML
+                        doc.Save(System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml"));
+                        System.Windows.MessageBox.Show("Changes applied successfully to the workspace.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Select a workspace first.", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+                
             }
-            System.Windows.MessageBox.Show("Select a workspace first.", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            
         }
 
         private void open_levelcompiler(object sender, RoutedEventArgs e)
@@ -480,6 +494,65 @@ namespace xrToolkit
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void delete_workspace_Click(object sender, RoutedEventArgs e)
+        {
+
+            MessageBoxResult validation = System.Windows.MessageBox.Show("Are you sure you want to delete this workspace?","Warning",MessageBoxButton.YesNo,MessageBoxImage.Warning);
+
+            switch (validation)
+            {
+                case MessageBoxResult.Yes:
+                    string selectedWorkspace = list_workspaces.SelectedItem.ToString();
+                    string workspacePath = System.IO.Path.GetFullPath(@"workspace_" + selectedWorkspace + ".xml");
+                    string workspacesIndex = System.IO.Path.GetFullPath(@"index_workspaces.xml");
+
+                    try
+                    {
+                        XDocument xdoc = XDocument.Load(workspacesIndex);
+
+                        var elementsToRemove = xdoc.Descendants().Where(e => e.Value == selectedWorkspace).ToList();
+
+                        foreach (var element in elementsToRemove)
+                        {
+                            element.Remove();
+                        }
+
+                        xdoc.Save(workspacesIndex);
+
+                        try
+                        {
+                            if (File.Exists(workspacePath))
+                            {
+                                // Elimina el archivo
+                                File.Delete(workspacePath);
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Couldn't find workspace info file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+
+                            System.Windows.MessageBox.Show(selectedWorkspace + " workspace deleted sucessfully.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    
+                    break;
+                case MessageBoxResult.No:
+                    
+                    break;
             }
         }
     }
