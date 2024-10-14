@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xrLauncherSDK", "xrLauncherSDK.csproj", "{41D4DA48-5F5A-4216-AAD3-69AA3FFCAEEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41D4DA48-5F5A-4216-AAD3-69AA3FFCAEEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41D4DA48-5F5A-4216-AAD3-69AA3FFCAEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41D4DA48-5F5A-4216-AAD3-69AA3FFCAEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41D4DA48-5F5A-4216-AAD3-69AA3FFCAEEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52EBB28F-6292-4BC7-8E4C-F4F68F332B66}
+	EndGlobalSection
+EndGlobal

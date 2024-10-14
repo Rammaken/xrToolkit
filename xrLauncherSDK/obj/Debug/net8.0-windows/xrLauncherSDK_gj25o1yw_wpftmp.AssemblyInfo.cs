@@ -11,14 +11,14 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("xrToolkit")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("xrLauncherSDK")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a832c7e2d875cb7ef86198d846eee928b3ec6fe6")]
-[assembly: System.Reflection.AssemblyProductAttribute("xrToolkit")]
-[assembly: System.Reflection.AssemblyTitleAttribute("xrToolkit")]
+[assembly: System.Reflection.AssemblyProductAttribute("xrLauncherSDK")]
+[assembly: System.Reflection.AssemblyTitleAttribute("xrLauncherSDK")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
-[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows10.0.26100.0")]
+[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.

@@ -1,0 +1,27 @@
+﻿<Window x:Class="xrLauncherSDK.ui_launcher"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:xrLauncherSDK"
+        mc:Ignorable="d"
+        Title="X-Ray SDK Launcher" Height="332" Width="856" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/xrtoolkit_logo.png">
+    <Grid>
+        <Button x:Name="btn_actor" Content="Actor Editor" HorizontalAlignment="Left" Margin="192,184,0,0" VerticalAlignment="Top" Height="92" Width="148" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" Click="btn_actor_Click"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="218,79,0,0" VerticalAlignment="Top" Width="96" Source="/icon_actoreditor.png" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="btn_level" Content="Level Editor" HorizontalAlignment="Left" Margin="350,184,0,0" VerticalAlignment="Top" Height="92" Width="148" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="378,79,0,0" VerticalAlignment="Top" Width="94" Source="/icon_leveleditor.png" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="btn_particle" Content="Particle Editor" HorizontalAlignment="Left" Margin="508,184,0,0" VerticalAlignment="Top" Height="92" Width="148" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="536,79,0,0" VerticalAlignment="Top" Width="94" Source="/icon_particleseditor.png" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="btn_shader" Content="Shader Editor" HorizontalAlignment="Left" Margin="666,184,0,0" VerticalAlignment="Top" Height="92" Width="148" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="692,79,0,0" VerticalAlignment="Top" Width="96" Source="/icon_shadereditor.png" RenderTransformOrigin="0.5,0.5"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="42,28,0,0" VerticalAlignment="Top" Width="100" Source="/xrtoolkit_logo.png"/>
+        <Label Content="Workspace:" HorizontalAlignment="Left" Margin="57,204,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo_workspace" HorizontalAlignment="Left" Margin="24,235,0,0" VerticalAlignment="Top" Width="144" SelectedIndex="0"/>
+        <Label Content="xrToolkit" HorizontalAlignment="Left" Margin="34,136,0,0" VerticalAlignment="Top" Width="117" FontSize="18" FontWeight="Bold" HorizontalContentAlignment="Center"/>
+        <Label Content="Editors" HorizontalAlignment="Left" Margin="210,17,0,0" VerticalAlignment="Top"/>
+        <Separator HorizontalAlignment="Left" Margin="210,45,0,0" VerticalAlignment="Top" Height="4" Width="610"/>
+        <Label Content="SDK Launcher" HorizontalAlignment="Left" Margin="34,170,0,0" VerticalAlignment="Top" Width="117" FontSize="10" HorizontalContentAlignment="Center"/>
+
+    </Grid>
+</Window>
