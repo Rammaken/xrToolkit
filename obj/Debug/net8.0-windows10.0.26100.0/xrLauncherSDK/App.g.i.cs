@@ -60,7 +60,7 @@ namespace xrLauncherSDK {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/xrToolkit;V1.0.0.0;component/xrlaunchersdk/app.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/xrToolkit;component/xrlaunchersdk/app.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\xrLauncherSDK\App.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

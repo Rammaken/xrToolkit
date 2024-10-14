@@ -70,6 +70,154 @@ namespace xrToolkit
             }
         }
 
+        public void applyWorkspace()
+        {
+            try
+            {
+                string workspaceName = combo_workspaces.SelectedItem.ToString();
+                string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
+
+                XDocument xmlDoc = XDocument.Load(workspace_file);
+
+                // Obtener el valor del nodo gamedata_path
+                string gamedataPath = xmlDoc.Root.Element("value")?.Attribute("name")?.Value == "gamedata_path" ? xmlDoc.Root.Element("value")?.Value : null;
+
+                string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
+
+                try
+                {
+                    string fsPath = System.IO.Path.GetFullPath(@"fs.ltx");
+                    string fsgamePath = System.IO.Path.GetFullPath(@"fsgame.ltx");
+                    string fsfactoryPath = System.IO.Path.GetFullPath(@"fsfactory.ltx");
+                    string converterPath = System.IO.Path.GetFullPath(@"converter.ini");
+                    string fsconverterPath = System.IO.Path.GetFullPath(@"fsconverter.ltx");
+
+                    //======== fs.ltx block ========
+                    string[] fsLines = File.ReadAllLines(fsPath);
+
+                    for (int i = 0; i < fsLines.Length; i++)
+                    {
+                        if (fsLines[i].Contains("$server_data_root$"))
+                        {
+                            fsLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < fsLines.Length; i++)
+                    {
+                        if (fsLines[i].Contains("$game_data$"))
+                        {
+                            fsLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    File.WriteAllLines(fsPath, fsLines);
+
+                    //======== fsgame.ltx block ========
+                    string[] fsgameLines = File.ReadAllLines(fsgamePath);
+
+                    for (int i = 0; i < fsgameLines.Length; i++)
+                    {
+                        if (fsgameLines[i].Contains("$game_data$"))
+                        {
+                            fsgameLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    File.WriteAllLines(fsgamePath, fsgameLines);
+
+                    //======== fsfactory.ltx block ========
+                    string[] fsfactoryLines = File.ReadAllLines(fsfactoryPath);
+
+                    for (int i = 0; i < fsfactoryLines.Length; i++)
+                    {
+                        if (fsfactoryLines[i].Contains("$server_data_root$"))
+                        {
+                            fsfactoryLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < fsfactoryLines.Length; i++)
+                    {
+                        if (fsfactoryLines[i].Contains("$game_data$"))
+                        {
+                            fsfactoryLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    File.WriteAllLines(fsfactoryPath, fsfactoryLines);
+
+                    //======== converter.ini block ========
+                    string[] converterLines = File.ReadAllLines(converterPath);
+
+                    for (int i = 0; i < converterLines.Length; i++)
+                    {
+                        if (converterLines[i].Contains("$game_data$"))
+                        {
+                            converterLines[i] = "$game_data$\t\t\t= " + gamedataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < converterLines.Length; i++)
+                    {
+                        if (converterLines[i].Contains("$game_levels$"))
+                        {
+                            converterLines[i] = "$game_levels$\t\t\t= " + gamedataPath + "\\levels\\";
+                            break;
+                        }
+                    }
+
+                    File.WriteAllLines(converterPath, converterLines);
+
+                    //======== fsconverter.ltx block ========
+                    string[] fsconverterLines = File.ReadAllLines(fsconverterPath);
+
+                    for (int i = 0; i < fsconverterLines.Length; i++)
+                    {
+                        if (fsconverterLines[i].Contains("$sdk_root_raw$"))
+                        {
+                            fsconverterLines[i] = "$sdk_root_raw$          = false| false| " + rawdataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < fsconverterLines.Length; i++)
+                    {
+                        if (fsconverterLines[i].Contains("server_data_root"))
+                        {
+                            fsconverterLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < fsconverterLines.Length; i++)
+                    {
+                        if (fsconverterLines[i].Contains("$game_data$"))
+                        {
+                            fsconverterLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                            break;
+                        }
+                    }
+
+                    File.WriteAllLines(fsconverterPath, fsconverterLines);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void btn_decompile_map_Click(object sender, RoutedEventArgs e)
         {
         }
@@ -554,6 +702,11 @@ namespace xrToolkit
                     
                     break;
             }
+        }
+
+        private void changeWorkspace(object sender, SelectionChangedEventArgs e)
+        {
+            applyWorkspace();
         }
     }
 }

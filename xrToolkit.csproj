@@ -10,4 +10,12 @@
     <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="icon_toolkit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icon_toolkit.png" />
+  </ItemGroup>
+
 </Project>

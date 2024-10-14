@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:xrToolkit"
         mc:Ignorable="d"
-        Title="xrToolkit v1.0" Height="450" Width="500">
+        Title="xrToolkit v1.0" Height="450" Width="500" Icon="/icon_toolkit.png" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl Margin="0,32,0,0">
             <TabItem HorizontalAlignment="Center" Height="20" Header="Tools" VerticalAlignment="Center" Width="54">
@@ -100,7 +100,7 @@
         </TabControl>
         <ToolBar x:Name="combo_workspace" Height="32" VerticalAlignment="Top" Background="#FFEDEDED">
             <Label Content="Selected workspace:"/>
-            <ComboBox x:Name="combo_workspaces" Width="120" Height="12" SelectedIndex="0" UseLayoutRounding="False" Cursor="Hand"/>
+            <ComboBox x:Name="combo_workspaces" Width="120" Height="12" SelectedIndex="0" UseLayoutRounding="False" Cursor="Hand" SelectionChanged="changeWorkspace"/>
         </ToolBar>
 
     </Grid>
