@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("xrToolkit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+255565fa85e5c87b380738a2dce7a5f9434ca3b0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+641b2bc88031cae9eeb903df2f49303775fde530")]
 [assembly: System.Reflection.AssemblyProductAttribute("xrToolkit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("xrToolkit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

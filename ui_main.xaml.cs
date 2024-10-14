@@ -855,6 +855,143 @@ namespace xrToolkit
                 btn_output_omfskls.IsEnabled = true;
             }
         }
+
+        private void btn_input_ddstga_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_ddstga_input.Text = path;
+            }
+        }
+
+        private void btn_output_ddstga_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_ddstga_output.Text = path;
+            }
+        }
+
+        private void btn_ddstga_convert_Click_2(object sender, RoutedEventArgs e)
+        {
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_ddstga_input.Text))
+            {
+                // If paths are empty...
+                System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                if (check_ddstga_autostore.IsChecked == true)
+                {
+                    convertDDStoTGA();
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(input_ddstga_output.Text))
+                    {
+                        System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        convertDDStoTGA();
+                    }
+                }
+            }
+        }
+
+        public void convertDDStoTGA()
+        {
+            string workspaceName = combo_workspaces.SelectedItem.ToString();
+            string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
+
+            XDocument xmlDoc = XDocument.Load(workspace_file);
+
+            string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
+
+            // Declaring and getting paths
+            string exePath = System.IO.Path.GetFullPath(@"thirdtools\magick.exe");
+            string inputPath = System.IO.Path.GetFullPath(input_ddstga_input.Text);
+            string outputPath = System.IO.Path.GetFullPath(input_ddstga_output.Text);
+
+            // Stores all files in input path
+            string[] ddsFiles = Directory.GetFiles(inputPath, "*.dds").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
+
+            // Loop for converting all files found
+            foreach (string file in ddsFiles)
+            {
+                // Status output
+                status_ddstga.Text += "Converting " + file + "...\n";
+
+                // Arguments declaration
+                string arguments;
+
+                if (check_ddstga_autostore.IsChecked == true)
+                {
+                    arguments = inputPath + "\\" + file + ".dds " + System.IO.Path.GetFullPath(rawdataPath + "\\converter_output") + "\\" + file + ".tga";
+                }
+                else
+                {
+                    arguments = inputPath + "\\" + file + ".dds " + outputPath + "\\" + file + ".tga";
+                }
+
+                // Declaring process with collected data
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                try
+                {
+                    // Starts process
+                    using (Process process = Process.Start(startInfo))
+                    {
+                        // Status output
+                        using (StreamReader reader = process.StandardOutput)
+                        {
+                            status_ddstga.Text += "Done!\n";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If something fails...
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            // FINISH
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        private void disable_ddstga_output(object sender, RoutedEventArgs e)
+        {
+            // Disables or enables output path
+            if (check_ddstga_autostore.IsChecked == true)
+            {
+                input_ddstga_output.IsEnabled = false;
+                btn_output_ddstga.IsEnabled = false;
+            }
+            else
+            {
+                input_ddstga_output.IsEnabled = true;
+                btn_output_ddstga.IsEnabled = true;
+            }
+        }
     }
 }
    
