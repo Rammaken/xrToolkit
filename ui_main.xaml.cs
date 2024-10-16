@@ -41,6 +41,7 @@ namespace xrToolkit
 
         public void loadWorkspaces()
         {
+            combo_workspaces.Items.Clear();
             // Ruta del archivo XML
             string workspaces_index = System.IO.Path.GetFullPath(@"index_workspaces.xml");
 
@@ -72,150 +73,158 @@ namespace xrToolkit
 
         public void applyWorkspace()
         {
-            try
+            if (combo_workspaces.SelectedItem != null)
             {
-                string workspaceName = combo_workspaces.SelectedItem.ToString();
-                string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
-
-                XDocument xmlDoc = XDocument.Load(workspace_file);
-
-                // Obtener el valor del nodo gamedata_path
-                string gamedataPath = xmlDoc.Root.Element("value")?.Attribute("name")?.Value == "gamedata_path" ? xmlDoc.Root.Element("value")?.Value : null;
-
-                string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
-
                 try
                 {
-                    string fsPath = System.IO.Path.GetFullPath(@"fs.ltx");
-                    string fsgamePath = System.IO.Path.GetFullPath(@"fsgame.ltx");
-                    string fsfactoryPath = System.IO.Path.GetFullPath(@"fsfactory.ltx");
-                    string converterPath = System.IO.Path.GetFullPath(@"converter.ini");
-                    string fsconverterPath = System.IO.Path.GetFullPath(@"fsconverter.ltx");
+                    string workspaceName = combo_workspaces.SelectedItem.ToString();
+                    string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
 
-                    //======== fs.ltx block ========
-                    string[] fsLines = File.ReadAllLines(fsPath);
+                    XDocument xmlDoc = XDocument.Load(workspace_file);
 
-                    for (int i = 0; i < fsLines.Length; i++)
+                    // Obtener el valor del nodo gamedata_path
+                    string gamedataPath = xmlDoc.Root.Element("value")?.Attribute("name")?.Value == "gamedata_path" ? xmlDoc.Root.Element("value")?.Value : null;
+
+                    string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
+
+                    try
                     {
-                        if (fsLines[i].Contains("$server_data_root$"))
-                        {
-                            fsLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
-                            break;
-                        }
-                    }
+                        string fsPath = System.IO.Path.GetFullPath(@"fs.ltx");
+                        string fsgamePath = System.IO.Path.GetFullPath(@"fsgame.ltx");
+                        string fsfactoryPath = System.IO.Path.GetFullPath(@"fsfactory.ltx");
+                        string converterPath = System.IO.Path.GetFullPath(@"converter.ini");
+                        string fsconverterPath = System.IO.Path.GetFullPath(@"fsconverter.ltx");
 
-                    for (int i = 0; i < fsLines.Length; i++)
+                        //======== fs.ltx block ========
+                        string[] fsLines = File.ReadAllLines(fsPath);
+
+                        for (int i = 0; i < fsLines.Length; i++)
+                        {
+                            if (fsLines[i].Contains("$server_data_root$"))
+                            {
+                                fsLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < fsLines.Length; i++)
+                        {
+                            if (fsLines[i].Contains("$game_data$"))
+                            {
+                                fsLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(fsPath, fsLines);
+
+                        //======== fsgame.ltx block ========
+                        string[] fsgameLines = File.ReadAllLines(fsgamePath);
+
+                        for (int i = 0; i < fsgameLines.Length; i++)
+                        {
+                            if (fsgameLines[i].Contains("$game_data$"))
+                            {
+                                fsgameLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(fsgamePath, fsgameLines);
+
+                        //======== fsfactory.ltx block ========
+                        string[] fsfactoryLines = File.ReadAllLines(fsfactoryPath);
+
+                        for (int i = 0; i < fsfactoryLines.Length; i++)
+                        {
+                            if (fsfactoryLines[i].Contains("$server_data_root$"))
+                            {
+                                fsfactoryLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < fsfactoryLines.Length; i++)
+                        {
+                            if (fsfactoryLines[i].Contains("$game_data$"))
+                            {
+                                fsfactoryLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(fsfactoryPath, fsfactoryLines);
+
+                        //======== converter.ini block ========
+                        string[] converterLines = File.ReadAllLines(converterPath);
+
+                        for (int i = 0; i < converterLines.Length; i++)
+                        {
+                            if (converterLines[i].Contains("$game_data$"))
+                            {
+                                converterLines[i] = "$game_data$\t\t\t= " + gamedataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < converterLines.Length; i++)
+                        {
+                            if (converterLines[i].Contains("$game_levels$"))
+                            {
+                                converterLines[i] = "$game_levels$\t\t\t= " + gamedataPath + "\\levels\\";
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(converterPath, converterLines);
+
+                        //======== fsconverter.ltx block ========
+                        string[] fsconverterLines = File.ReadAllLines(fsconverterPath);
+
+                        for (int i = 0; i < fsconverterLines.Length; i++)
+                        {
+                            if (fsconverterLines[i].Contains("$sdk_root_raw$"))
+                            {
+                                fsconverterLines[i] = "$sdk_root_raw$          = false| false| " + rawdataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < fsconverterLines.Length; i++)
+                        {
+                            if (fsconverterLines[i].Contains("server_data_root"))
+                            {
+                                fsconverterLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < fsconverterLines.Length; i++)
+                        {
+                            if (fsconverterLines[i].Contains("$game_data$"))
+                            {
+                                fsconverterLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(fsconverterPath, fsconverterLines);
+                    }
+                    catch (Exception ex)
                     {
-                        if (fsLines[i].Contains("$game_data$"))
-                        {
-                            fsLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
-                            break;
-                        }
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
-                    File.WriteAllLines(fsPath, fsLines);
-
-                    //======== fsgame.ltx block ========
-                    string[] fsgameLines = File.ReadAllLines(fsgamePath);
-
-                    for (int i = 0; i < fsgameLines.Length; i++)
-                    {
-                        if (fsgameLines[i].Contains("$game_data$"))
-                        {
-                            fsgameLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    File.WriteAllLines(fsgamePath, fsgameLines);
-
-                    //======== fsfactory.ltx block ========
-                    string[] fsfactoryLines = File.ReadAllLines(fsfactoryPath);
-
-                    for (int i = 0; i < fsfactoryLines.Length; i++)
-                    {
-                        if (fsfactoryLines[i].Contains("$server_data_root$"))
-                        {
-                            fsfactoryLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < fsfactoryLines.Length; i++)
-                    {
-                        if (fsfactoryLines[i].Contains("$game_data$"))
-                        {
-                            fsfactoryLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    File.WriteAllLines(fsfactoryPath, fsfactoryLines);
-
-                    //======== converter.ini block ========
-                    string[] converterLines = File.ReadAllLines(converterPath);
-
-                    for (int i = 0; i < converterLines.Length; i++)
-                    {
-                        if (converterLines[i].Contains("$game_data$"))
-                        {
-                            converterLines[i] = "$game_data$\t\t\t= " + gamedataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < converterLines.Length; i++)
-                    {
-                        if (converterLines[i].Contains("$game_levels$"))
-                        {
-                            converterLines[i] = "$game_levels$\t\t\t= " + gamedataPath + "\\levels\\";
-                            break;
-                        }
-                    }
-
-                    File.WriteAllLines(converterPath, converterLines);
-
-                    //======== fsconverter.ltx block ========
-                    string[] fsconverterLines = File.ReadAllLines(fsconverterPath);
-
-                    for (int i = 0; i < fsconverterLines.Length; i++)
-                    {
-                        if (fsconverterLines[i].Contains("$sdk_root_raw$"))
-                        {
-                            fsconverterLines[i] = "$sdk_root_raw$          = false| false| " + rawdataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < fsconverterLines.Length; i++)
-                    {
-                        if (fsconverterLines[i].Contains("server_data_root"))
-                        {
-                            fsconverterLines[i] = "$server_data_root$          = false| false| " + rawdataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < fsconverterLines.Length; i++)
-                    {
-                        if (fsconverterLines[i].Contains("$game_data$"))
-                        {
-                            fsconverterLines[i] = "$game_data$                 = false| true| " + gamedataPath + "\\";
-                            break;
-                        }
-                    }
-
-                    File.WriteAllLines(fsconverterPath, fsconverterLines);
                 }
                 catch (Exception ex)
                 {
                     System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                combo_workspaces.SelectedIndex = 0;
             }
+            
         }
 
         private void btn_decompile_map_Click(object sender, RoutedEventArgs e)
@@ -307,11 +316,20 @@ namespace xrToolkit
             XDocument xmlDoc = XDocument.Load(workspace_file);
 
             string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
+            System.Windows.MessageBox.Show(rawdataPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Declaring and getting paths
             string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
             string inputPath = System.IO.Path.GetFullPath(input_ogfobj_input.Text);
-            string outputPath = System.IO.Path.GetFullPath(input_ogfobj_output.Text);
+            string outputPath = "gamedata";
+            if (check_ogfobj_autostore.IsChecked == true)
+            {
+
+            } else
+            {
+                outputPath = System.IO.Path.GetFullPath(input_ogfobj_output.Text);
+            }
+                
 
             // Stores all files in input path
             string[] ogfFiles = Directory.GetFiles(inputPath, "*.ogf").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
@@ -327,7 +345,7 @@ namespace xrToolkit
 
                 if (check_ogfobj_autostore.IsChecked == true)
                 {
-                    arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + System.IO.Path.GetFullPath(rawdataPath + "\\converter_output") + "\\" + file + ".object";
+                    arguments = "-ogf -object " + inputPath + "\\" + file + ".ogf -out " + rawdataPath + "\\objects\\converter_output\\" + file + ".object";
                 }
                 else
                 {
@@ -410,7 +428,87 @@ namespace xrToolkit
 
         private void btn_unpack_db_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_db_input.Text) || string.IsNullOrWhiteSpace(input_db_output.Text))
+            {
+                // If paths are empty...
+                System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                // Declaring and getting paths
+                string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
+                string inputPath = System.IO.Path.GetFullPath(input_db_input.Text);
+                string outputPath = System.IO.Path.GetFullPath(input_db_output.Text);
+
+                // Stores all files in input path
+                string[] formats = new string[] { "*.db", "*.db0", "*.db1", "*.db2", "*.db3", "*.db4", "*.db5", "*.db6", "*.db7", "*.db8", "*.db9" }; // Añade los formatos que necesites
+                List<string> dbFiles = new List<string>();
+
+                foreach (string format in formats)
+                {
+                    dbFiles.AddRange(Directory.GetFiles(inputPath, format).Select(System.IO.Path.GetFileName));
+                }
+
+                string[] totalFiles = dbFiles.ToArray();
+
+                string dbFormat = "-xdb";
+                if (rdn_db_game_cscop.IsChecked == true)
+                {
+                    dbFormat = "-xdb";
+                }
+                else if (rdn_db_game_socww.IsChecked == true)
+                {
+                    dbFormat = "-2947ww";
+                }
+                else if (rdn_db_game_socru.IsChecked == true)
+                {
+                    dbFormat = "-2947cru";
+                }
+
+                // Loop for converting all files found
+                foreach (string file in totalFiles)
+                {
+                    // Status output
+                    status_ogfobj.Text += "Unpacking " + file + "...\n";
+
+
+                    // Arguments declaration
+                    string arguments = "-unpack " + dbFormat + " " + inputPath + "\\" + file + " -dir " + outputPath;
+
+                    // Declaring process with collected data
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = exePath,
+                        Arguments = arguments,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    try
+                    {
+                        // Starts process
+                        using (Process process = Process.Start(startInfo))
+                        {
+                            // Status output
+                            using (StreamReader reader = process.StandardOutput)
+                            {
+                                status_db.Text += "Done!\n";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // If something fails...
+                        {
+                            System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+                // FINISH
+                System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void decompile_level(object sender, RoutedEventArgs e)
@@ -422,12 +520,12 @@ namespace xrToolkit
             else
             {
                 string var_level_name = input_map_name.Text;
-                string decompilation_code = "converter.exe -level sdk:" + var_level_name + " -mode le -with_lods";
+                string decompilation_code = "thirdtools\\converter.exe -level sdk:" + var_level_name + " -mode le -with_lods";
 
                 status_level.Text += "Decompiling " + var_level_name + " map...\n";
 
                 // Ruta del archivo .bat
-                string batFilePath = System.IO.Path.GetFullPath(@"thirdtools\decompile_level.bat");
+                string batFilePath = System.IO.Path.GetFullPath(@"decompile_level.bat");
 
                 // Contenido del archivo .bat
                 string batContent = decompilation_code + "\npause";
@@ -526,7 +624,7 @@ namespace xrToolkit
         {
             ui_workspace_create WorkspaceCreatorWindow = new ui_workspace_create();
             WorkspaceCreatorWindow.ShowDialog();
-            combo_workspaces.Items.Clear();
+            list_workspaces.Items.Clear();
             list_workspaces.Items.Clear();
             loadWorkspaces();
         }
@@ -783,7 +881,16 @@ namespace xrToolkit
             // Declaring and getting paths
             string exePath = System.IO.Path.GetFullPath(@"thirdtools\converter.exe");
             string inputPath = System.IO.Path.GetFullPath(input_omfskls_input.Text);
-            string outputPath = System.IO.Path.GetFullPath(input_omfskls_output.Text);
+            string outputPath = "gamedata";
+
+            if (check_ogfobj_autostore.IsChecked == true)
+            {
+
+            }
+            else
+            {
+                outputPath = System.IO.Path.GetFullPath(input_omfskls_output.Text);
+            }
 
             // Stores all files in input path
             string[] omfFiles = Directory.GetFiles(inputPath, "*.omf").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
@@ -799,7 +906,7 @@ namespace xrToolkit
 
                 if (check_omfskls_autostore.IsChecked == true)
                 {
-                    arguments = "-omf -skls " + inputPath + "\\" + file + ".omf -out " + System.IO.Path.GetFullPath(rawdataPath + "\\converter_output") + "\\" + file + ".skls";
+                    arguments = "-omf -skls " + inputPath + "\\" + file + ".omf -out " + rawdataPath + "\\objects\\converter_output\\" + file + ".skls";
                 }
                 else
                 {
@@ -920,10 +1027,18 @@ namespace xrToolkit
             // Declaring and getting paths
             string exePath = System.IO.Path.GetFullPath(@"thirdtools\magick.exe");
             string inputPath = System.IO.Path.GetFullPath(input_ddstga_input.Text);
-            string outputPath = System.IO.Path.GetFullPath(input_ddstga_output.Text);
+            string outputPath = "gamedata";
 
-            // Stores all files in input path
-            string[] ddsFiles = Directory.GetFiles(inputPath, "*.dds").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
+            if (check_ddstga_autostore.IsChecked == true)
+            {
+
+            }
+            else
+            {
+                outputPath = System.IO.Path.GetFullPath(input_ddstga_output.Text); 
+            }
+                // Stores all files in input path
+                string[] ddsFiles = Directory.GetFiles(inputPath, "*.dds").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
 
             // Loop for converting all files found
             foreach (string file in ddsFiles)
@@ -936,7 +1051,7 @@ namespace xrToolkit
 
                 if (check_ddstga_autostore.IsChecked == true)
                 {
-                    arguments = inputPath + "\\" + file + ".dds " + System.IO.Path.GetFullPath(rawdataPath + "\\converter_output") + "\\" + file + ".tga";
+                    arguments = inputPath + "\\" + file + ".dds " + rawdataPath + "\\textures\\converter_output\\" + file + ".tga";
                 }
                 else
                 {
@@ -990,6 +1105,152 @@ namespace xrToolkit
             {
                 input_ddstga_output.IsEnabled = true;
                 btn_output_ddstga.IsEnabled = true;
+            }
+        }
+
+        private void btn_input_oggwav_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_oggwav_input.Text = path;
+            }
+        }
+
+        private void btn_output_oggwav_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_oggwav_output.Text = path;
+            }
+        }
+
+        private void btn_oggwav_convert_Click_2(object sender, RoutedEventArgs e)
+        {
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_oggwav_input.Text))
+            {
+                // If paths are empty...
+                System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                if (check_oggwav_autostore.IsChecked == true)
+                {
+                    convertOGGtoWAV();
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(input_oggwav_output.Text))
+                    {
+                        System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        convertOGGtoWAV();
+                    }
+                }
+            }
+        }
+
+        public void convertOGGtoWAV()
+        {
+            string workspaceName = combo_workspaces.SelectedItem.ToString();
+            string workspace_file = System.IO.Path.GetFullPath(@"workspace_" + workspaceName + ".xml");
+
+            XDocument xmlDoc = XDocument.Load(workspace_file);
+
+            string rawdataPath = xmlDoc.Root.Elements("value").FirstOrDefault(e => e.Attribute("name")?.Value == "rawdata_path")?.Value;
+
+            // Declaring and getting paths
+            string exePath = System.IO.Path.GetFullPath(@"thirdtools\ffmpeg.exe");
+            string inputPath = System.IO.Path.GetFullPath(input_oggwav_input.Text);
+            string outputPath = "gamedata";
+
+            if (check_oggwav_autostore.IsChecked == true)
+            {
+
+            }
+            else
+            {
+                outputPath = System.IO.Path.GetFullPath(input_oggwav_output.Text);
+            }
+
+            // Stores all files in input path
+            string[] oggFiles = Directory.GetFiles(inputPath, "*.ogg").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
+
+            // Loop for converting all files found
+            foreach (string file in oggFiles)
+            {
+                // Status output
+                status_oggwav.Text += "Converting " + file + "...\n";
+
+                // Arguments declaration
+                string arguments;
+
+                if (check_oggwav_autostore.IsChecked == true)
+                {
+                    arguments = "-i " + inputPath + "\\" + file + ".ogg " + rawdataPath + "\\sounds\\converter_output" + file + ".wav";
+                }
+                else
+                {
+                    arguments = "-i " + inputPath + "\\" + file + ".ogg " + outputPath + "\\" + file + ".wav";
+                }
+
+                // Declaring process with collected data
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                try
+                {
+                    // Starts process
+                    using (Process process = Process.Start(startInfo))
+                    {
+                        // Status output
+                        using (StreamReader reader = process.StandardOutput)
+                        {
+                            status_oggwav.Text += "Done!\n";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If something fails...
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            // FINISH
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        private void disable_oggwav_output(object sender, RoutedEventArgs e)
+        {
+            // Disables or enables output path
+            if (check_oggwav_autostore.IsChecked == true)
+            {
+                input_oggwav_output.IsEnabled = false;
+                btn_output_oggwav.IsEnabled = false;
+            }
+            else
+            {
+                input_oggwav_output.IsEnabled = true;
+                btn_output_oggwav.IsEnabled = true;
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<workspace>
-  <value name="gamedata_path">E:\Workspace\CSharp\xrToolkit\bin\Debug\net8.0-windows10.0.26100.0\sfsdfsfds</value>
-  <value name="rawdata_path">E:\Workspace\CSharp\xrToolkit\bin\Debug\net8.0-windows10.0.26100.0\dfgdfgfdgdgfd</value>
-</workspace>
+<workspace_default>
+  <value name="gamedata_path">E:\Workspace\Modding\IXRSDK\gamedata</value>
+  <value name="rawdata_path">E:\Workspace\Modding\IXRSDK\rawdata</value>
+</workspace_default>

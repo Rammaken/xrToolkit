@@ -8,10 +8,15 @@
     <UseWPF>true</UseWPF>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <UseWindowsForms>True</UseWindowsForms>
+    <ApplicationIcon>icon_toolkit.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="icon_toolkit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon_toolkit.ico" />
   </ItemGroup>
 
   <ItemGroup>

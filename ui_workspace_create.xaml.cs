@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,8 +65,20 @@ namespace xrToolkit
                         // Guardar los cambios en el archivo XML
                         doc.Save(System.IO.Path.GetFullPath(@"index_workspaces.xml"));
 
-                        System.Windows.MessageBox.Show("Workspace " + workspace_name + " created sucessfully", "Done", MessageBoxButton.OK, MessageBoxImage.Question);
-                        this.Close();
+                        try
+                        {
+                            string gamedataBase = System.IO.Path.GetFullPath(@"resources\gamedata_base.zip");
+                            string rawdataBase = System.IO.Path.GetFullPath(@"resources\rawdata_base.zip");
+                            // Extraer el archivo .zip
+                            ZipFile.ExtractToDirectory(gamedataBase, gamedata_path);
+                            ZipFile.ExtractToDirectory(rawdataBase, rawdata_path);
+                            System.Windows.MessageBox.Show("Workspace " + workspace_name + " created sucessfully", "Done", MessageBoxButton.OK, MessageBoxImage.Question);
+                            this.Close();
+                        }
+                        catch(Exception ex)
+                        {
+                            System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     catch (Exception ex)
                     {

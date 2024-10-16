@@ -1,0 +1,43 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "xrToolkit/1.0.0": {
+        "dependencies": {
+          "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.26100.44"
+        },
+        "runtime": {
+          "xrToolkit.dll": {}
+        }
+      },
+      "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.26100.44": {
+        "runtime": {
+          "Microsoft.Windows.SDK.NET.dll": {
+            "assemblyVersion": "10.0.26100.38",
+            "fileVersion": "10.0.26100.43"
+          },
+          "WinRT.Runtime.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.2.47512"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "xrToolkit/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.26100.44": {
+      "type": "runtimepack",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
