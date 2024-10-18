@@ -151,7 +151,22 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Spawn decompiler">
-                            <Grid/>
+                            <Grid>
+                                <Label Content="Input .spawn file" HorizontalAlignment="Left" Margin="41,28,0,0" VerticalAlignment="Top"/>
+                                <TextBox HorizontalAlignment="Left" Margin="41,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
+                                <Label Content="Output folder" HorizontalAlignment="Left" Margin="41,95,0,0" VerticalAlignment="Top"/>
+                                <TextBox HorizontalAlignment="Left" Margin="41,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
+                                <Label Content="Configs folder from mod files" HorizontalAlignment="Left" Margin="41,186,0,0" VerticalAlignment="Top"/>
+                                <TextBox HorizontalAlignment="Left" Margin="41,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="23"/>
+                                <Label Content="Spawn type" HorizontalAlignment="Left" Margin="307,186,0,0" VerticalAlignment="Top"/>
+                                <RadioButton Content="Vanilla (SoC, CS, CoP)" HorizontalAlignment="Left" Margin="307,217,0,0" VerticalAlignment="Top" GroupName="spawn_type" IsChecked="True"/>
+                                <RadioButton Content="Modded (Custom)" HorizontalAlignment="Left" Margin="307,237,0,0" VerticalAlignment="Top" GroupName="spawn_type" IsChecked="True"/>
+                                <TextBox x:Name="status_level_Copiar" Margin="39,279,219,38" TextWrapping="Wrap" IsEnabled="False"/>
+                                <Button Content="Decompile" HorizontalAlignment="Left" Margin="307,318,0,0" VerticalAlignment="Top" Height="47" Width="141"/>
+                                <Button Content="Set" HorizontalAlignment="Left" Margin="426,59,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
+                                <Button Content="Set" HorizontalAlignment="Left" Margin="426,126,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
+                                <Button Content="Set" HorizontalAlignment="Left" Margin="236,217,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>

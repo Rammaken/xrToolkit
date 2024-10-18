@@ -1,0 +1,230 @@
+=head1 ActivePerl 5.12 Change Log
+
+For the latest information on ActivePerl, please see:
+
+    http://www.ActiveState.com/ActivePerl/
+
+=head2 Build 1205 June 23, 2011
+
+Build 1205 is based on Perl 5.12.4 plus additional selected changes.
+
+I<Bug Fixes and Changes since build 1204>
+
+=over 3
+
+=item *
+
+Significant changes that have occurred in the Perl 5.12.4 release, are
+documented in L<perl5124delta>.
+
+=item *
+
+Most bundled modules have been updated to their latest released
+version from CPAN.  Use the C<ppm query> command to check the exact
+version included in this release.
+
+=back
+
+=head2 Build 1204 February 14, 2011
+
+Build 1204 is based on Perl 5.12.3 plus additional selected changes from
+the Perl development branch.
+
+I<Bug Fixes and Changes since build 1203>
+
+=over 3
+
+=item *
+
+Significant changes that have occurred in the Perl 5.12.3 release, are
+documented in L<perl5123delta>.
+
+=item *
+
+Invoking the debugger by putting the -d option on the #! line works
+correctly now.  In earlier 5.12 releases the debugger would not
+properly record the source lines and therefore wouldn't allow setting
+of breakpoints.
+
+=item *
+
+Most bundled modules have been updated to their latest released
+version from CPAN.  Use the C<ppm query> command to check the exact
+version included in this release.
+
+=back
+
+=head2 Build 1203 December 8, 2010
+
+Build 1203 is based on Perl 5.12.2 plus additional selected changes from
+the Perl development branch.
+
+I<Bug Fixes and Changes since build 1202>
+
+=over 3
+
+=item *
+
+Support for 64-bit PerlScript for Windows has been added.
+
+=item *
+
+DBD::Oracle binaries have been included in the 64-bit builds for Linux
+and Windows.  Just like the 32-bit binaries they require an installation
+of the Oracle client libraries to be functional.
+
+=item *
+
+DBD::Pg has been added for all platforms.  Works out-of-the box, as all
+required additional libraries are statically linked into the module.
+
+=item *
+
+Most bundled modules have been updated to their latest released
+version from CPAN.  Use the C<ppm query> command to check the exact
+version included in this release.
+
+=back
+
+=head2 Build 1202 September 6, 2010
+
+Build 1202 is based on Perl 5.12.2 plus additional selected changes from
+the Perl development branch.
+
+I<Bug Fixes and Changes since build 1201>
+
+=over 3
+
+=item *
+
+ActivePerl now bundles Perl-Critic together with the graphical shell introduced
+in the Perl Dev Kit.  Perl-Critic is a system for enforcing your specified
+coding guidelines.
+
+=item *
+
+ActivePerl now bundles Devel-NYTProf; a source code profiler.  The profiler
+measures and reports the time at spent by different parts of programs.
+
+=item *
+
+ActivePerl now bundles Moose; a modern object system.  Moose makes Perl 5
+Object Oriented programming easier, more consistent and less tedious.
+
+=item *
+
+Upgraded libgd, freetype, png and jpeg libraries linked with the GD module.
+True type fonts are now supported.
+
+=item *
+
+Significant changes that have occurred in the Perl 5.12.2 release, are
+documented in L<perl5122delta>.
+
+=item *
+
+Most bundled modules have been updated to their latest released
+version from CPAN.  Use the C<ppm query> command to check the exact
+version included in this release.
+
+The following new CPAN modules are bundled in this release:
+
+    Algorithm-C3
+    B-Keywords
+    Class-C3
+    Class-Data-Inheritable
+    Class-MOP
+    Config-Tiny
+    Data-OptList
+    Devel-GlobalDestruction
+    Devel-NYTProf
+    Devel-StackTrace
+    Email-Address
+    Exception-Class
+    IO-String
+    JSON-Any
+    List-MoreUtils
+    Moose
+    MRO-Campat
+    Package-DeprecationManager
+    Package-Stash
+    Perl-Critic
+    PPI
+    PPIx-Utilities
+    Readonly
+    Readonly-XS
+    Scope-Guard
+    Sub-Exporter
+    Sub-Install
+    Sub-Name
+    Task-Weaken
+    Try-Tiny
+    Win32-Console-ANSI
+
+=back
+
+=head2 Build 1201 May 17, 2010
+
+Build 1201 is based on Perl 5.12.1 plus additional selected changes from
+the Perl development branch.
+
+I<Bug Fixes and Changes since build 1200>
+
+=over 3
+
+=item *
+
+The following security vulnerabilities have been addressed:
+
+=over
+
+=item *
+
+The Crypt::SSLeay in this release is compiled against OpenSSL 1.0.0
+which contains various security fixes.
+
+=item *
+
+The upgrades to the CGI and Safe modules in this release might prevent
+security vulnerabilities in end-user code, depending on how these
+modules are being used.
+
+=back
+
+=item *
+
+Significant changes that have occurred in the Perl 5.12.1 release, are
+documented in L<perl5121delta>.
+
+=item *
+
+Most bundled modules have been updated to their latest released
+version from CPAN.  Use the C<ppm query> command to check the exact
+version included in this release.
+
+=back
+
+=head2 Build 1200 February 20, 2010
+
+I<What's new in the 1200 Series>
+
+=over 3
+
+=item *
+
+This build corresponds to the Perl 5.12.0 source code release.
+
+=item *
+
+The 1200 series builds of ActivePerl are not binary compatible with
+builds in the 600, 800 or 1000 series.  Any extensions built using binaries
+from the ActivePerl 600, 800 or 1000 series will need to be recompiled.
+Note especially that this applies to PPM packages that may have been
+built for 600, 800 or 1000 series builds.
+
+=item *
+
+Significant changes that have occurred in the 5.12.0 release
+are documented in L<perl5120delta>.
+
+=back

@@ -1,0 +1,8 @@
+HTTP 200 OK
+Content-type: text/html
+
+
+<html>
+Your request exceeded the PerlEx data size limits configured on this
+server.  Please contact the web site administrator.
+</html>
