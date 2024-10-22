@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:xrToolkit"
         mc:Ignorable="d"
-        Title="xrToolkit v1.0" Height="521" Width="500" Icon="/icon_toolkit.png" WindowStartupLocation="CenterScreen">
+        Title="xrToolkit v1.1" Height="521" Width="500" Icon="/icon_toolkit.png" WindowStartupLocation="CenterScreen">
     <Grid>
         <ToolBar x:Name="toolbar_toolkit" Height="32" VerticalAlignment="Top" Background="#FFEDEDED">
             <Label Content="Selected workspace:"/>
@@ -13,7 +13,13 @@
         </ToolBar>
         <TabControl x:Name="tabs" Margin="0,32,0,-1">
             <TabItem x:Name="tab_home" Header="Home">
-                <Grid/>
+                <Grid>
+                    <Image HorizontalAlignment="Center" Height="100" Margin="0,25,0,0" VerticalAlignment="Top" Width="312" Source="/readme_logo.png"/>
+                    <Label Content="Version 1.1" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top"/>
+                    <Separator Margin="19,164,19,0" VerticalAlignment="Top" Height="5"/>
+                    <Button Content="GitHub repository&#xD;&#xA;(Source code &amp; releases)" HorizontalAlignment="Center" Margin="0,204,0,0" VerticalAlignment="Top" Height="55" Width="298"/>
+                    <Button Content="Wiki" HorizontalAlignment="Center" Margin="0,283,0,0" VerticalAlignment="Top" Height="33" Width="298"/>
+                </Grid>
             </TabItem>
             <TabItem x:Name="tab_workspaces" HorizontalAlignment="Center" Height="20" Header="Workspaces" VerticalAlignment="Top" Width="75" Margin="0,-1,0,0">
                 <Grid>
@@ -116,7 +122,7 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab_textures" HorizontalAlignment="Center" Height="20" Header="Textures" VerticalAlignment="Top" Width="62" Margin="0,-1,0,0">
+            <TabItem x:Name="tab_textures" Height="20" Header="Textures" VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Left" Width="55">
                 <Grid Height="452" Margin="-2,0,-2,0">
                     <TabControl Margin="0,0,0,4">
                         <TabItem Header="Tools">
@@ -152,20 +158,32 @@
                         </TabItem>
                         <TabItem Header="Spawn decompiler">
                             <Grid>
-                                <Label Content="Input .spawn file" HorizontalAlignment="Left" Margin="41,28,0,0" VerticalAlignment="Top"/>
-                                <TextBox HorizontalAlignment="Left" Margin="41,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
-                                <Label Content="Output folder" HorizontalAlignment="Left" Margin="41,95,0,0" VerticalAlignment="Top"/>
-                                <TextBox HorizontalAlignment="Left" Margin="41,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
-                                <Label Content="Configs folder from mod files" HorizontalAlignment="Left" Margin="41,186,0,0" VerticalAlignment="Top"/>
-                                <TextBox HorizontalAlignment="Left" Margin="41,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="23"/>
-                                <Label Content="Spawn type" HorizontalAlignment="Left" Margin="307,186,0,0" VerticalAlignment="Top"/>
-                                <RadioButton Content="Vanilla (SoC, CS, CoP)" HorizontalAlignment="Left" Margin="307,217,0,0" VerticalAlignment="Top" GroupName="spawn_type" IsChecked="True"/>
-                                <RadioButton Content="Modded (Custom)" HorizontalAlignment="Left" Margin="307,237,0,0" VerticalAlignment="Top" GroupName="spawn_type" IsChecked="True"/>
-                                <TextBox x:Name="status_level_Copiar" Margin="39,279,219,38" TextWrapping="Wrap" IsEnabled="False"/>
-                                <Button Content="Decompile" HorizontalAlignment="Left" Margin="307,318,0,0" VerticalAlignment="Top" Height="47" Width="141"/>
-                                <Button Content="Set" HorizontalAlignment="Left" Margin="426,59,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
-                                <Button Content="Set" HorizontalAlignment="Left" Margin="426,126,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
-                                <Button Content="Set" HorizontalAlignment="Left" Margin="236,217,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
+                                <Label Content="Input .spawn file" HorizontalAlignment="Left" Margin="30,28,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_despawn_input" HorizontalAlignment="Left" Margin="30,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
+                                <Label Content="Output folder" HorizontalAlignment="Left" Margin="30,95,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_despawn_output" HorizontalAlignment="Left" Margin="30,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
+                                <Label Content="Configs folder from mod files" HorizontalAlignment="Left" Margin="30,186,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_despawn_configs" HorizontalAlignment="Left" Margin="30,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="23" IsEnabled="False"/>
+                                <Label Content="Spawn type" HorizontalAlignment="Left" Margin="296,186,0,0" VerticalAlignment="Top"/>
+                                <RadioButton x:Name="rdn_modded_spawn" Content="Modded (Custom)" HorizontalAlignment="Left" Margin="296,237,0,0" VerticalAlignment="Top" GroupName="spawn_type" IsChecked="False" Cursor="Hand" Click="check_spawn_format"/>
+                                <TextBox x:Name="status_decompilespawn" Margin="28,279,230,38" TextWrapping="Wrap" IsEnabled="False"/>
+                                <Button x:Name="btn_decompile_spawn" Content="Decompile" HorizontalAlignment="Left" Margin="296,318,0,0" VerticalAlignment="Top" Height="47" Width="141" Click="decompile_spawn"/>
+                                <Button x:Name="btn_spawn_set_input" Content="Set" HorizontalAlignment="Left" Margin="415,59,0,0" VerticalAlignment="Top" Height="23" Width="40" Click="btn_spawn_set_input_Click"/>
+                                <Button x:Name="btn_spawn_set_output" Content="Set" HorizontalAlignment="Left" Margin="415,126,0,0" VerticalAlignment="Top" Height="23" Width="40" Click="btn_spawn_set_output_Click"/>
+                                <Button x:Name="btn_spawn_set_configs" Content="Set" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="23" Width="40" Click="btn_spawn_set_configs_Click" IsEnabled="False"/>
+                                <RadioButton x:Name="rdn_vanilla_spawn" Content="Vanilla (SoC, CS, CoP)" HorizontalAlignment="Left" Margin="296,217,0,0" VerticalAlignment="Top" GroupName="spawn_type" IsChecked="True" Cursor="Hand" Click="check_spawn_format"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem HorizontalAlignment="Center" Height="20" Header="Spawn compiler" VerticalAlignment="Top" Width="99" Margin="0,-1,0,0">
+                            <Grid>
+                                <Label Content="Input decompiled spawn folder" HorizontalAlignment="Left" Margin="30,28,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_cospawn_input" HorizontalAlignment="Left" Margin="30,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
+                                <Label Content="Output .spawn file folder" HorizontalAlignment="Left" Margin="30,122,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="input_cospawn_output" HorizontalAlignment="Left" Margin="30,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="23"/>
+                                <TextBox x:Name="status_cospawn" Margin="46,219,212,98" TextWrapping="Wrap" IsEnabled="False"/>
+                                <Button x:Name="btn_cospawn_compile" Content="Compile" HorizontalAlignment="Left" Margin="314,248,0,0" VerticalAlignment="Top" Height="47" Width="141" Click="compile_spawn"/>
+                                <Button x:Name="btn_cospawn_set_input" Content="Set" HorizontalAlignment="Left" Margin="415,59,0,0" VerticalAlignment="Top" Height="23" Width="40" Click="btn_cospawn_set_input_Click"/>
+                                <Button x:Name="btn_cospawn_set_output" Content="Set" HorizontalAlignment="Left" Margin="415,153,0,0" VerticalAlignment="Top" Height="23" Width="40" Click="set_cospawn_output"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

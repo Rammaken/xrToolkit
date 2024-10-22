@@ -24,3 +24,4 @@ E:\Workspace\CSharp\xrToolkit\obj\Debug\net8.0-windows10.0.26100.0\refint\xrTool
 E:\Workspace\CSharp\xrToolkit\obj\Debug\net8.0-windows10.0.26100.0\xrToolkit.pdb
 E:\Workspace\CSharp\xrToolkit\obj\Debug\net8.0-windows10.0.26100.0\xrToolkit.genruntimeconfig.cache
 E:\Workspace\CSharp\xrToolkit\obj\Debug\net8.0-windows10.0.26100.0\ref\xrToolkit.dll
+E:\Workspace\CSharp\xrToolkit\obj\Debug\net8.0-windows10.0.26100.0\xrToolkit_Content.g.cs

@@ -1253,6 +1253,204 @@ namespace xrToolkit
                 btn_output_oggwav.IsEnabled = true;
             }
         }
+
+        private void decompile_spawn(object sender, RoutedEventArgs e)
+        {
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_despawn_input.Text) || string.IsNullOrWhiteSpace(input_despawn_output.Text))
+            {
+                // If paths are empty...
+                System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                // Declaring and getting paths
+                string perlPath = System.IO.Path.GetFullPath(@"resources\perl\bin\perl.exe");
+                string inputPath = System.IO.Path.GetFullPath(input_despawn_input.Text);
+                string outputPath = System.IO.Path.GetFullPath(input_despawn_output.Text);
+
+                string spawnFormat = "-sort complex -nofatal";
+                if (rdn_db_game_cscop.IsChecked == true)
+                {
+                    spawnFormat = "-sort complex -nofatal";
+                }
+                else if (rdn_db_game_socww.IsChecked == true)
+                {
+                    string configsPath = System.IO.Path.GetFullPath(input_despawn_configs.Text);
+                    spawnFormat = "-scan " + configsPath  + "/ -sort complex";
+                }
+
+                    // Status output
+                    status_ogfobj.Text += "Unpacking spawn...\n";
+
+
+                    // Arguments declaration
+                    string arguments = "thirdtools\\acdc\\universal_acdc.pl -d " + inputPath + " -out " + outputPath + " " + spawnFormat;
+
+                    // Declaring process with collected data
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = perlPath,
+                        Arguments = arguments,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    try
+                    {
+                        // Starts process
+                        using (Process process = Process.Start(startInfo))
+                        {
+                            // Status output
+                            using (StreamReader reader = process.StandardOutput)
+                            {
+                                status_db.Text += "Done!\n";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // If something fails...
+                        {
+                            System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+                // FINISH
+                System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void btn_spawn_set_output_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_despawn_output.Text = path;
+            }
+        }
+
+        private void btn_spawn_set_configs_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_despawn_configs.Text = path;
+            }
+        }
+
+        private void btn_spawn_set_input_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Spawn file|*.spawn";
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+                input_cospawn_input.Text = selectedFilePath;
+            }
+        }
+
+        private void btn_cospawn_set_input_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_despawn_output.Text = path;
+            }
+        }
+
+        private void check_spawn_format(object sender, RoutedEventArgs e)
+        {
+            if (rdn_vanilla_spawn.IsChecked == true)
+            {
+                input_despawn_configs.IsEnabled = false;
+                btn_spawn_set_configs.IsEnabled = false;
+            }
+            else if(rdn_modded_spawn.IsChecked == true)
+            {
+                input_despawn_configs.IsEnabled = true;
+                btn_spawn_set_configs.IsEnabled = true;
+            }
+        }
+
+        private void set_cospawn_output(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                string path = dialog.SelectedPath;
+                input_cospawn_output.Text = path;
+            }
+        }
+
+        private void compile_spawn(object sender, RoutedEventArgs e)
+        {
+            // Paths validation
+            if (string.IsNullOrWhiteSpace(input_cospawn_input.Text) || string.IsNullOrWhiteSpace(input_cospawn_output.Text))
+            {
+                // If paths are empty...
+                System.Windows.MessageBox.Show("Insert the paths", "Invalid action", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                // Declaring and getting paths
+                string perlPath = System.IO.Path.GetFullPath(@"resources\perl\bin\perl.exe");
+                string inputPath = System.IO.Path.GetFullPath(input_cospawn_input.Text);
+                string outputPath = System.IO.Path.GetFullPath(input_cospawn_output.Text);
+
+                // Status output
+                status_ogfobj.Text += "Compiling spawn...\n";
+
+
+                // Arguments declaration
+                string arguments = "thirdtools\\acdc\\universal_acdc.pl -compile " + inputPath + " -out " + outputPath + "\\all.spawn";
+
+                // Declaring process with collected data
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = perlPath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                try
+                {
+                    // Starts process
+                    using (Process process = Process.Start(startInfo))
+                    {
+                        // Status output
+                        using (StreamReader reader = process.StandardOutput)
+                        {
+                            status_db.Text += "Done!\n";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If something fails...
+                    {
+                        System.Windows.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            // FINISH
+            System.Windows.MessageBox.Show("Finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
    
